@@ -64,6 +64,10 @@ public class SuperHero {
 		this.id = id;
 	}
 
+	public SuperHero(String name) {
+		this.name = name;
+	}
+
 	public SuperHero(String name, String pseudonym, String publisher, Set<Skill> skills, String dateOfAppearance) {
 		this.name = name;
 		this.pseudonym = pseudonym;
