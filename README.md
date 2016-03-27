@@ -34,3 +34,6 @@ Go on the project's root folder, then type:
 #### From Eclipse
 
 Import as *Existing Maven Project* and run it as *Spring Boot App*.
+
+#### From Docker Toolbox
+docker run -p 8080:8080 -t manhhoang/spring-boot
