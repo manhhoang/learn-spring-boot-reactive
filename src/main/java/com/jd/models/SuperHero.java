@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -52,7 +51,10 @@ public class SuperHero {
 	private Set<Skill> skills;
 
 	// The super hero's allies if the superhero has any
-	@Transient
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "super_hero_allies", joinColumns = {
+			@JoinColumn(name = "super_hero_id", nullable = true) }, inverseJoinColumns = {
+					@JoinColumn(name = "ally_super_hero_id", nullable = false) })
 	private Set<SuperHero> allies;
 
 	// The super hero's date of first appearance (format YYYY-MM-DD)

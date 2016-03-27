@@ -7,10 +7,9 @@
 - Use the following urls to invoke controllers methods and see the interactions
   with the database:
     * `/get-all`: Return all super heroes
-    * `/create?name=[name]`: create a new super hero with an 
-      auto-generated id and name as passed values.
+    * `/create?name=[name]&pseudonym=[pseudonym]&publisher=[publisher]&skill=[skill]&allies=[allies]&dateOfAppearance=[dateOfAppearance]`: create a new super hero with an auto-generated id and name as passed values.
     * `/delete?id=[id]`: delete the super hero with the passed id.
-    * `/get-by-name?name=[name]`: retrieve the id for the super hero with the 
+    * `/get-by-name?name=[name]`: retrieve the detail information for the super hero with the 
       passed name.
     * `/update?id=[id]&name=[name]`: update the name for the super hero indentified by the passed id.
 
