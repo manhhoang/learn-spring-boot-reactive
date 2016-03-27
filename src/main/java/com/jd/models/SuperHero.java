@@ -75,14 +75,6 @@ public class SuperHero {
 		this.name = name;
 	}
 
-	public SuperHero(String name, String pseudonym, String publisher, Set<Skill> skills, String dateOfAppearance) {
-		this.name = name;
-		this.pseudonym = pseudonym;
-		this.publisher = publisher;
-		this.skills = skills;
-		this.dateOfAppearance = dateOfAppearance;
-	}
-
 	public SuperHero(String name, String pseudonym, String publisher, Set<Skill> skills, Set<SuperHero> allies,
 			String dateOfAppearance) {
 		this.name = name;

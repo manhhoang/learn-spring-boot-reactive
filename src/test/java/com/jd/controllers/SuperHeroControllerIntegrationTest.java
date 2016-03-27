@@ -1,85 +1,50 @@
 package com.jd.controllers;
 
-import java.util.Collections;
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
+
+import java.io.IOException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
-import com.jayway.restassured.config.Config;
-import com.jd.models.SuperHero;
-import com.jd.models.SuperHeroDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jd.Application;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@SpringApplicationConfiguration(classes = Application.class)
 //@WebAppConfiguration
 //@IntegrationTest("server.port:0")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Config.class)
+// @SpringApplicationConfiguration(classes = Config.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
 public class SuperHeroControllerIntegrationTest {
 
-	@Autowired
-	private SuperHeroDao superHeroDao;
-
-	SuperHero batMan;
-	SuperHero spiderMan;
-	SuperHero superMan;
-
-	@Value("${local.server.port}")
-	int port;
-
-	// @Before
-	// public void setUp() {
-	// batMan = new SuperHero("Batman");
-	// spiderMan = new SuperHero("Spiderman");
-	// superMan = new SuperHero("Superman");
-	//
-	// superHeroDao.deleteAll();
-	// superHeroDao.save(Arrays.asList(batMan, spiderMan, superMan));
-	//
-	// RestAssured.port = port;
-	// }
-
 	@Test
-	public void canFetchBatman() {
-		long batManId = batMan.getSuperHeroId();
-
-		// when().get("/get-by-name/{id}",
-		// batManId).then().statusCode(HttpStatus.SC_OK)
-		// .body("name", Matchers.is("Mickey Mouse")).body("id",
-		// Matchers.is(batManId));
-	}
-
-	RestTemplate template = new TestRestTemplate();
-
-	@Test
-	public void testRequest() throws Exception {
-		HttpHeaders headers = template.getForEntity("http://localhost:8080", String.class).getHeaders();
-		// assertThat(headers.getLocation().toString(),
-		// containsString("Batman"));
-	}
-
-	@Test
-	public void shouldCreateSuperHero() {
-		SuperHero superHero = new SuperHero("Batman");
+	public void testGetAllSuperHero() throws JsonProcessingException, IOException {
 		RestTemplate rest = new TestRestTemplate();
-		ResponseEntity<SuperHero> response = rest.postForEntity("http://locahost:8080/create", superHero,
-				SuperHero.class, Collections.EMPTY_MAP);
-		// assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
-		//
+		ResponseEntity<String> response = rest.getForEntity("http://locahost:8080/get-all", String.class);
+		assertThat(response.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode responseJson = objectMapper.readTree(response.getBody());
+		JsonNode messageJson = responseJson.path("message");
+
+		assertThat(messageJson.asText(), equalTo("test"));
 		// SuperHero superHeroCreated = response.getBody();
-		// assertThat(superHeroCreated.getId(), notNullValue());
+		// assertThat(superHeroCreated.getSuperHeroId(), notNullValue());
 		// assertThat(superHeroCreated.getName(), equalTo("Batman"));
 	}
 }

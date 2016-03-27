@@ -1,5 +1,6 @@
 ## Spring Boot
 
+curl -u test:password http://localhost:8080/get-all
 
 ### Usage
 
