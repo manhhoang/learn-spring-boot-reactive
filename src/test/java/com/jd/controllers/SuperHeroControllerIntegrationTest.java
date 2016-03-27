@@ -27,7 +27,7 @@ import com.jd.models.SuperHeroDao;
 @SpringApplicationConfiguration(classes = Config.class)
 @WebAppConfiguration
 @IntegrationTest
-public class SuperHeroControllerTest {
+public class SuperHeroControllerIntegrationTest {
 
 	@Autowired
 	private SuperHeroDao superHeroDao;
@@ -53,11 +53,12 @@ public class SuperHeroControllerTest {
 
 	@Test
 	public void canFetchBatman() {
-		long batManId = batMan.getId();
+		long batManId = batMan.getSuperHeroId();
 
 		// when().get("/get-by-name/{id}",
 		// batManId).then().statusCode(HttpStatus.SC_OK)
-		// .body("name", Matchers.is("Mickey Mouse")).body("id", Matchers.is(batManId));
+		// .body("name", Matchers.is("Mickey Mouse")).body("id",
+		// Matchers.is(batManId));
 	}
 
 	RestTemplate template = new TestRestTemplate();
@@ -73,8 +74,8 @@ public class SuperHeroControllerTest {
 	public void shouldCreateSuperHero() {
 		SuperHero superHero = new SuperHero("Batman");
 		RestTemplate rest = new TestRestTemplate();
-		ResponseEntity<SuperHero> response = rest.postForEntity("http://locahost:8080/create", superHero, SuperHero.class,
-				Collections.EMPTY_MAP);
+		ResponseEntity<SuperHero> response = rest.postForEntity("http://locahost:8080/create", superHero,
+				SuperHero.class, Collections.EMPTY_MAP);
 		// assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
 		//
 		// SuperHero superHeroCreated = response.getBody();
