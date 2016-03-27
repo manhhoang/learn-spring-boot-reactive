@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import com.jd.models.SuperHero;
 import com.jd.models.SuperHeroDao;
 
-public class SuperHeroControllerMockTest {
+public class SuperHeroControllerUnitTest {
 
 	@Mock
 	private SuperHeroDao superHeroDao;
