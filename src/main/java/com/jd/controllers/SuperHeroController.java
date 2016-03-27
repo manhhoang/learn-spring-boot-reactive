@@ -45,39 +45,44 @@ public class SuperHeroController {
 	 * @return A string describing if the super hero is succesfully created or
 	 *         not.
 	 */
-	// @RequestMapping("/create")
-	// @ResponseBody
-	// public String create(String name, String pseudonym, String publisher,
-	// List<String> skills, List<String> allies,
-	// String dateOfAppearance) {
-	// SuperHero superHero = null;
-	// try {
-	// superHero = new SuperHero(name, pseudonym, publisher, skills, allies,
-	// dateOfAppearance);
-	// superHeroDao.save(superHero);
-	// } catch (Exception ex) {
-	// return "Error creating the super hero: " + ex.toString();
-	// }
-	// return "User succesfully created! (id = " + superHero.getId() + ")";
-	// }
-
 	@RequestMapping("/create")
 	@ResponseBody
-	public String create(String name, String pseudonym, String publisher, String skill, String dateOfAppearance) {
+	public String create(String name, String pseudonym, String publisher, String skill, String allies,
+			String dateOfAppearance) {
+		SuperHero foundHero = superHeroDao.findByName(name);
+		if (foundHero != null)
+			return "Super hero " + name + " already exist";
+
 		SuperHero superHero = null;
 		try {
-			String[] skills = skill.split(",");
+			// Set skills for super hero
 			Set<Skill> sks = new HashSet<>();
-			for (String s : skills) {
-				Skill sk = new Skill(s);
-				sks.add(sk);
+			if (skill != null) {
+				String[] skills = skill.split(",");
+				for (String s : skills) {
+					Skill sk = new Skill(s);
+					sks.add(sk);
+				}
 			}
-			superHero = new SuperHero(name, pseudonym, publisher, sks, dateOfAppearance);
+
+			// Find ally for super hero
+			Set<SuperHero> superHeroes = new HashSet<>();
+			if (allies != null) {
+				String[] al = allies.split(",");
+				for (String allyName : al) {
+					SuperHero foundAllyHero = superHeroDao.findByName(allyName);
+					if (foundAllyHero != null)
+						superHeroes.add(foundAllyHero);
+				}
+			}
+
+			// Save hero to database
+			superHero = new SuperHero(name, pseudonym, publisher, sks, superHeroes, dateOfAppearance);
 			superHeroDao.save(superHero);
 		} catch (Exception ex) {
 			return "Error creating the super hero: " + ex.toString();
 		}
-		return "User succesfully created! (id = " + superHero.getId() + ")";
+		return "User succesfully created! (id = " + superHero.getSuperHeroId() + ")";
 	}
 
 	/**
@@ -110,14 +115,15 @@ public class SuperHeroController {
 	@RequestMapping("/get-by-name")
 	@ResponseBody
 	public String getByName(String name) {
-		String superHeroId;
+		ObjectMapper mapper = new ObjectMapper();
 		try {
 			SuperHero superHero = superHeroDao.findByName(name);
-			superHeroId = String.valueOf(superHero.getId());
+			if (superHero == null)
+				return "Super hero not found";
+			return mapper.writeValueAsString(superHero);
 		} catch (Exception ex) {
 			return "Super hero not found";
 		}
-		return "The super hero id is: " + superHeroId;
 	}
 
 	/**
