@@ -86,9 +86,6 @@ public class SuperHeroControllerIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode responseJson = objectMapper.readTree(response.getBody());
     assertThat(responseJson.asText(), equalTo(""));
-    // SuperHero superHeroCreated = response.getBody();
-    // assertThat(superHeroCreated.getSuperHeroId(), notNullValue());
-    // assertThat(superHeroCreated.getName(), equalTo("Batman"));
   }
 
   @Test
@@ -101,7 +98,7 @@ public class SuperHeroControllerIntegrationTest {
             "https://localhost:8888/create?name=Xman&pseudonym=pseudonym&publisher=Marvel&skill=Fly&allies=Robin&dateOfAppearance=1980-09-01",
             String.class);
     assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-    assertThat(response.getBody(), equalTo("User succesfully created!"));
+    assertThat(response.getBody(), equalTo("Super hero succesfully created!"));
   }
 
   @Test

@@ -3,8 +3,11 @@
 
 ### Usage
 
-- Hosted this application on Docker in AWS cloud https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-all
-- User name: test
+- Hosted this application on Docker in AWS cloud. 
+- List all super heroes: https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-all
+- List one super hero: https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-by-name?name=Batman
+- Create new super hero: https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/create?name=Spiderman&pseudonym=pseudonym&publisher=Marvel&skill=Fly&allies=&dateOfAppearance=1980-09-01
+- Username: test
 - Password:  password
 - Use the following urls to invoke controllers methods and see the interactions
   with the database:

@@ -77,7 +77,7 @@ public class SuperHeroController {
     } catch (Exception ex) {
       return "Error creating the super hero: " + ex.toString();
     }
-    return "User succesfully created!";
+    return "Super hero succesfully created!";
   }
 
   /**
