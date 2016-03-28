@@ -3,9 +3,9 @@
 
 ### Usage
 
-- Run the application and go on https://54.251.124.145:8443/get-all
+- Hosted this application on Docker in AWS cloud https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-all
 - User name: test
-- Password: password
+- Password:  password
 - Use the following urls to invoke controllers methods and see the interactions
   with the database:
     * `/get-all`: Return all super heroes
@@ -36,7 +36,6 @@
 - src/main/java/com.jd.models.Skill.java: skill of super hero entity, one super hero can have many skills. This is one-to-many relationship.
 - src/main/java/com.jd.models.User.java: user entity.
 - src/main/java/com.jd.models.UserDao.java: Data access layer of user table.
-
 - src/main/docker/Dockerfile: Docker file.
 - src/main/resources/application.properties: Spring Boot configuration file.
 
