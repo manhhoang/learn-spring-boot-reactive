@@ -3,7 +3,8 @@
 
 ### Usage
 
-- Hosted this application on Docker in AWS cloud https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-all
+- Hosted this application on Docker in AWS cloud 
+  https://ec2-54-251-124-145.ap-southeast-1.compute.amazonaws.com:8443/get-all
 - User name: test
 - Password:  password
 - Use the following urls to invoke controllers methods and see the interactions
