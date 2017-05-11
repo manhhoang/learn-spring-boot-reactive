@@ -7,21 +7,20 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jd.models.Hero;
+import com.jd.repository.HeroRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.jd.models.SuperHero;
-import com.jd.models.SuperHeroDao;
-
-public class SuperHeroControllerUnitTest {
+public class HeroControllerUnitTest {
 
   @Mock
-  private SuperHeroDao superHeroDao;
+  private HeroRepository heroRepository;
 
   @Mock
-  private SuperHero superHero;
+  private Hero hero;
 
   @Before
   public void setupMock() {
@@ -30,31 +29,31 @@ public class SuperHeroControllerUnitTest {
 
   @Test
   public void testMockCreation() {
-    assertNotNull(superHero);
-    assertNotNull(superHeroDao);
+    assertNotNull(hero);
+    assertNotNull(heroRepository);
   }
 
   @Test
   public void testGetAllHero() {
-    List<SuperHero> heroes = new ArrayList<>();
-    SuperHero hero = new SuperHero("Batman");
+    List<Hero> heroes = new ArrayList<>();
+    Hero hero = new Hero("Batman");
     heroes.add(hero);
-    when(superHeroDao.findAll()).thenReturn(heroes);
-    for (SuperHero foundHero : superHeroDao.findAll()) {
+    when(heroRepository.findAll()).thenReturn(heroes);
+    for (Hero foundHero : heroRepository.findAll()) {
       assertEquals(foundHero.getName(), "Batman");
     }
   }
 
   @Test
   public void testGetByName() {
-    when(superHeroDao.findByName("Batman")).thenReturn(superHero);
-    assertEquals(superHero, superHeroDao.findByName("Batman"));
+    when(heroRepository.findByName("Batman")).thenReturn(hero);
+    assertEquals(hero, heroRepository.findByName("Batman"));
   }
 
   @Test
   public void testCreateHero() {
-    when(superHeroDao.save(superHero)).thenReturn(superHero);
-    assertNotNull(superHeroDao.save(superHero));
+    when(heroRepository.save(hero)).thenReturn(hero);
+    assertNotNull(heroRepository.save(hero));
   }
 
 }

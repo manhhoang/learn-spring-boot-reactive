@@ -1,118 +1,63 @@
 package com.jd.controllers;
 
+import com.jd.exception.ApiException;
+import com.jd.models.User;
+import com.jd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.jd.models.User;
-import com.jd.models.UserDao;
-
-/**
- * A class to test interactions with the MySQL database using the UserDao class.
- *
- * @author Manh Hoang
- */
 @Controller
 public class UserController {
 
-	// ------------------------
-	// PUBLIC METHODS
-	// ------------------------
+	@Autowired
+	private UserRepository userRepository;
 
-	/**
-	 * /create --> Create a new user and save it in the database.
-	 * 
-	 * @param username
-	 *            User's username
-	 * @param password
-	 *            User's password
-	 * @return A string describing if the user is succesfully created or not.
-	 */
-	@RequestMapping("/create-user")
-	@ResponseBody
-	public String create(String username, String password) {
-		User user = null;
+	@RequestMapping(value = "/user/create", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody User create(@RequestBody User user) throws ApiException {
+		User newUser;
 		try {
-			user = new User(username, password);
-			userDao.save(user);
+			newUser = userRepository.save(user);
 		} catch (Exception ex) {
-			return "Error creating the user: " + ex.toString();
+			throw new ApiException();
 		}
-		return "User succesfully created! (id = " + user.getId() + ")";
+		return newUser;
 	}
 
-	/**
-	 * /delete --> Delete the user having the passed id.
-	 * 
-	 * @param id
-	 *            The id of the user to delete
-	 * @return A string describing if the user is succesfully deleted or not.
-	 */
-	@RequestMapping("/delete-user")
-	@ResponseBody
-	public String delete(long id) {
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public @ResponseBody String delete(@PathVariable("id") long id) throws ApiException {
 		try {
 			User user = new User(id);
-			userDao.delete(user);
+			userRepository.delete(user);
 		} catch (Exception ex) {
-			return "Error deleting the user:" + ex.toString();
+			throw new ApiException();
 		}
 		return "User succesfully deleted!";
 	}
 
-	/**
-	 * /get-by-username --> Return the id for the user having the passed
-	 * username.
-	 * 
-	 * @param username
-	 *            The username to search in the database.
-	 * @return The user id or a message error if the user is not found.
-	 */
-	@RequestMapping("/get-by-username")
-	@ResponseBody
-	public String getByUsernamel(String username) {
-		String userId;
+	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody User getByUsername(@PathVariable("username") String username) throws ApiException {
+		User user;
 		try {
-			User user = userDao.findByUsername(username);
-			userId = String.valueOf(user.getId());
+			user = userRepository.findByUsername(username);
 		} catch (Exception ex) {
-			return "User not found";
+			throw new ApiException();
 		}
-		return "The user id is: " + userId;
+		return user;
 	}
 
-	/**
-	 * /update --> Update the username and the password for the user in the
-	 * database having the passed id.
-	 * 
-	 * @param id
-	 *            The id for the user to update.
-	 * @param username
-	 *            The new username.
-	 * @param password
-	 *            The new password.
-	 * @return A string describing if the user is succesfully updated or not.
-	 */
-	@RequestMapping("/update-user")
-	@ResponseBody
-	public String updateUser(long id, String username, String password) {
+	@RequestMapping(value = "/user", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public @ResponseBody User updateUser(@RequestBody User user) throws ApiException {
+		User updatedUser;
 		try {
-			User user = userDao.findOne(id);
-			user.setUsername(username);
-			user.setPassword(password);
-			userDao.save(user);
+			User foundUser = userRepository.findOne(user.getId());
+			foundUser.setUsername(user.getUsername());
+			foundUser.setPassword(user.getPassword());
+			updatedUser = userRepository.save(foundUser);
 		} catch (Exception ex) {
-			return "Error updating the user: " + ex.toString();
+			throw new ApiException();
 		}
-		return "User succesfully updated!";
+		return updatedUser;
 	}
 
-	// ------------------------
-	// PRIVATE FIELDS
-	// ------------------------
-
-	@Autowired
-	private UserDao userDao;
-
-} // class UserController
+}
