@@ -17,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import java.io.IOException;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -55,6 +56,28 @@ public class UserControllerIntegrationTest {
         HttpEntity<String> entity = new HttpEntity<>(requestBody, header);
 
         ResponseEntity<User> response = restTemplate.postForEntity("/api/user/create", entity, User.class);
+
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(response.getBody().getUsername(), equalTo("Test"));
+        assertNotEquals(response.getBody().getId(), null);
+    }
+
+    @Test
+    public void testFindUserByName() throws IOException {
+        User user = new User();
+        user.setUsername("Test");
+        user.setPassword("12345");
+
+        ObjectMapper mapper = new ObjectMapper();
+        String requestBody = mapper.writeValueAsString(user);
+
+        MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
+        header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
+        HttpEntity<String> entity = new HttpEntity<>(requestBody, header);
+
+        restTemplate.postForEntity("/api/user/create", entity, User.class);
+
+        ResponseEntity<User> response = restTemplate.getForEntity("/api/user/Test", User.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         assertThat(response.getBody().getUsername(), equalTo("Test"));

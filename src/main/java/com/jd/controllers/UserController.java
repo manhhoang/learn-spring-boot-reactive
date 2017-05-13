@@ -2,7 +2,7 @@ package com.jd.controllers;
 
 import com.jd.exception.ApiException;
 import com.jd.models.User;
-import com.jd.repository.UserRepository;
+import com.jd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ import java.util.List;
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@RequestMapping(value = "/user/create", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody User create(@RequestBody User user) throws ApiException {
 		User newUser;
 		try {
-			newUser = userRepository.save(user);
+			newUser = userService.save(user);
 		} catch (Exception ex) {
 			throw new ApiException("100", "Fail to save user");
 		}
@@ -33,7 +33,7 @@ public class UserController {
 	public @ResponseBody String delete(@PathVariable("id") long id) throws ApiException {
 		try {
 			User user = new User(id);
-			userRepository.delete(user);
+			userService.delete(user);
 		} catch (Exception ex) {
 			throw new ApiException("100", "Fail to delete user");
 		}
@@ -44,7 +44,7 @@ public class UserController {
 	public @ResponseBody User getByUsername(@PathVariable("username") String username) throws ApiException {
 		User user;
 		try {
-			user = userRepository.findByUsername(username);
+			user = userService.findByUserName(username);
 		} catch (Exception ex) {
 			throw new ApiException("100", "Fail to find user");
 		}
@@ -55,10 +55,10 @@ public class UserController {
 	public @ResponseBody User updateUser(@RequestBody User user) throws ApiException {
 		User updatedUser;
 		try {
-			User foundUser = userRepository.findOne(user.getId());
+			User foundUser = userService.findOne(user.getId());
 			foundUser.setUsername(user.getUsername());
 			foundUser.setPassword(user.getPassword());
-			updatedUser = userRepository.save(foundUser);
+			updatedUser = userService.save(foundUser);
 		} catch (Exception ex) {
 			throw new ApiException("100", "Fail to save user");
 		}
@@ -69,7 +69,7 @@ public class UserController {
 	public ResponseEntity<List<User>> getAllHeroes() throws ApiException {
 		List<User> users;
 		try {
-			users = (List<User>) userRepository.findAll();
+			users = userService.findAll();
 		} catch (Exception ex) {
 			throw new ApiException("100", "Fail to find all users");
 		}

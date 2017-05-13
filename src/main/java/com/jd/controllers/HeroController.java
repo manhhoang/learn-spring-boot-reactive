@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.bus.EventBus;
 
 import java.util.List;
@@ -31,8 +28,8 @@ public class HeroController {
   private EventBus eventBus;
 
   @RequestMapping(value = "/hero/create", method = RequestMethod.POST, headers = "Accept=application/json")
-  public @ResponseBody Hero create(@RequestBody Hero hero) throws ApiException {
-    Hero foundHero = heroRepository.findByName(hero.getName());
+  public @ResponseBody ResponseEntity<Hero> create(@RequestBody Hero hero) throws ApiException {
+    Hero foundHero = heroService.findByName(hero.getName());
     if (foundHero != null)
       throw new ApiException("100", "Hero is exist");
 
@@ -42,7 +39,7 @@ public class HeroController {
     } catch (Exception ex) {
       throw new ApiException("100", "Fail to save hero");
     }
-    return newHero;
+    return new ResponseEntity<>(newHero, HttpStatus.OK);
   }
 
   @RequestMapping("/delete")
@@ -50,24 +47,23 @@ public class HeroController {
   public String delete(long id) {
     try {
       Hero hero = new Hero(id);
-      heroRepository.delete(hero);
+      heroService.delete(hero);
     } catch (Exception ex) {
       return "Error deleting the super hero:" + ex.toString();
     }
     return "Super hero succesfully deleted!";
   }
 
-  @RequestMapping("/get-by-name")
-  @ResponseBody
-  public String getByName(String name) {
+  @RequestMapping(value = "/hero/{name}", method = RequestMethod.GET, headers = "Accept=application/json")
+  public @ResponseBody String getByName(@PathVariable("name") String name) throws ApiException{
     ObjectMapper mapper = new ObjectMapper();
     try {
-      Hero superHero = heroRepository.findByName(name);
+      Hero superHero = heroService.findByName(name);
       if (superHero == null)
-        return "Super hero not found";
+        throw new ApiException("100", "Fail to find hero");
       return mapper.writeValueAsString(superHero);
     } catch (Exception ex) {
-      return "Super hero not found";
+      throw new ApiException("100", "Fail to find hero");
     }
   }
 
@@ -75,7 +71,7 @@ public class HeroController {
   public ResponseEntity<List<Hero>> getAllHeroes() throws ApiException {
     List<Hero> heroes;
     try {
-      heroes = (List<Hero>) heroRepository.findAll();
+      heroes = heroService.findAll();
     } catch (Exception ex) {
       throw new ApiException("100", "Fail to find all hero");
     }
@@ -84,13 +80,13 @@ public class HeroController {
 
   @RequestMapping("/update")
   @ResponseBody
-  public String updateSuperHero(long id, String name) {
+  public String updateHero(long id, String name) throws ApiException{
     try {
-      Hero hero = heroRepository.findOne(id);
+      Hero hero = heroService.findOne(id);
       hero.setName(name);
       heroRepository.save(hero);
     } catch (Exception ex) {
-      return "Error updating the super hero: " + ex.toString();
+      throw new ApiException("100", "Fail to update hero");
     }
     return "Super hero succesfully updated!";
   }
