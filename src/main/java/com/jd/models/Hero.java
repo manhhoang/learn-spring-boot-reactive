@@ -1,16 +1,18 @@
 package com.jd.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name = "super_hero")
+@Table(name = "hero")
 public class Hero {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long superHeroId;
+	private long heroId;
 
 	@NotNull
 	private String name;
@@ -20,14 +22,14 @@ public class Hero {
 	private String publisher;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "super_hero_skill", joinColumns = { @JoinColumn(name = "super_hero_id") }, inverseJoinColumns = {
+	@JoinTable(name = "hero_skill", joinColumns = { @JoinColumn(name = "hero_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "skill_id") })
 	private Set<Skill> skills;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "super_hero_allies", joinColumns = {
-			@JoinColumn(name = "super_hero_id", nullable = true) }, inverseJoinColumns = {
-					@JoinColumn(name = "ally_super_hero_id", nullable = false) })
+	@JoinTable(name = "hero_allies", joinColumns = {
+			@JoinColumn(name = "hero_id", nullable = true) }, inverseJoinColumns = {
+					@JoinColumn(name = "ally_hero_id", nullable = false) })
 	private Set<Hero> allies;
 
 	private String dateOfAppearance;
@@ -36,7 +38,7 @@ public class Hero {
 	}
 
 	public Hero(long id) {
-		this.superHeroId = id;
+		this.heroId = id;
 	}
 
 	public Hero(String name) {
@@ -59,12 +61,12 @@ public class Hero {
 		return name;
 	}
 
-	public long getSuperHeroId() {
-		return superHeroId;
+	public long getHeroId() {
+		return heroId;
 	}
 
-	public void setSuperHeroId(long superHeroId) {
-		this.superHeroId = superHeroId;
+	public void setHeroId(long heroId) {
+		this.heroId = heroId;
 	}
 
 	public void setName(String name) {

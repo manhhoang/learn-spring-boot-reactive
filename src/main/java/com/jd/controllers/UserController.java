@@ -4,10 +4,15 @@ import com.jd.exception.ApiException;
 import com.jd.models.User;
 import com.jd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
@@ -19,7 +24,7 @@ public class UserController {
 		try {
 			newUser = userRepository.save(user);
 		} catch (Exception ex) {
-			throw new ApiException();
+			throw new ApiException("100", "Fail to save user");
 		}
 		return newUser;
 	}
@@ -30,7 +35,7 @@ public class UserController {
 			User user = new User(id);
 			userRepository.delete(user);
 		} catch (Exception ex) {
-			throw new ApiException();
+			throw new ApiException("100", "Fail to delete user");
 		}
 		return "User succesfully deleted!";
 	}
@@ -41,7 +46,7 @@ public class UserController {
 		try {
 			user = userRepository.findByUsername(username);
 		} catch (Exception ex) {
-			throw new ApiException();
+			throw new ApiException("100", "Fail to find user");
 		}
 		return user;
 	}
@@ -55,9 +60,20 @@ public class UserController {
 			foundUser.setPassword(user.getPassword());
 			updatedUser = userRepository.save(foundUser);
 		} catch (Exception ex) {
-			throw new ApiException();
+			throw new ApiException("100", "Fail to save user");
 		}
 		return updatedUser;
+	}
+
+	@RequestMapping(value = "/users", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ResponseEntity<List<User>> getAllHeroes() throws ApiException {
+		List<User> users;
+		try {
+			users = (List<User>) userRepository.findAll();
+		} catch (Exception ex) {
+			throw new ApiException("100", "Fail to find all users");
+		}
+		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
 }

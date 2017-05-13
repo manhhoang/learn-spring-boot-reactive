@@ -1,5 +1,7 @@
 package com.jd.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +18,8 @@ public class User {
 
 	@NotNull
 	private String password;
+
+	public User() {}
 
 	public User(long id) {
 		this.id = id;

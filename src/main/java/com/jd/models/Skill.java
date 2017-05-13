@@ -19,10 +19,6 @@ public class Skill {
 	@NotNull
 	private String name;
 
-	// ------------------------
-	// PUBLIC METHODS
-	// ------------------------
-
 	public Skill() {
 	}
 

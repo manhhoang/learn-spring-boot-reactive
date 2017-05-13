@@ -3,7 +3,6 @@ package com.jd.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jd.exception.ApiException;
 import com.jd.models.Hero;
-import com.jd.models.Skill;
 import com.jd.repository.HeroRepository;
 import com.jd.service.HeroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import reactor.bus.Event;
 import reactor.bus.EventBus;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static reactor.bus.selector.Selectors.$;
 
 @Controller
+@RequestMapping("/api")
 public class HeroController {
 
   @Autowired
@@ -39,13 +34,13 @@ public class HeroController {
   public @ResponseBody Hero create(@RequestBody Hero hero) throws ApiException {
     Hero foundHero = heroRepository.findByName(hero.getName());
     if (foundHero != null)
-      throw new ApiException();
+      throw new ApiException("100", "Hero is exist");
 
     Hero newHero;
     try {
       newHero = heroService.save(hero);
     } catch (Exception ex) {
-      throw new ApiException();
+      throw new ApiException("100", "Fail to save hero");
     }
     return newHero;
   }
@@ -82,18 +77,11 @@ public class HeroController {
     try {
       heroes = (List<Hero>) heroRepository.findAll();
     } catch (Exception ex) {
-      throw new ApiException();
+      throw new ApiException("100", "Fail to find all hero");
     }
     return new ResponseEntity<>(heroes, HttpStatus.OK);
   }
 
-  /**
-   * /update --> Update the name for the super hero in the database having the passed id.
-   * 
-   * @param id The id for the super hero to update.
-   * @param name The new name.
-   * @return A string describing if the super hero is succesfully updated or not.
-   */
   @RequestMapping("/update")
   @ResponseBody
   public String updateSuperHero(long id, String name) {
