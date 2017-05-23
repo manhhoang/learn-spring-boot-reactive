@@ -38,7 +38,11 @@ public class HeroControllerIntegrationTest {
 
     @Test
     public void testGetAllHeroButEmpty() throws IOException {
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/heroes", String.class);
+        MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
+        header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
+        HttpEntity<String> entity = new HttpEntity<>(header);
+
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/heroes", String.class, entity);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 
         ObjectMapper objectMapper = new ObjectMapper();
