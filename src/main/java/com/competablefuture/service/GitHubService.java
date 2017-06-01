@@ -1,4 +1,4 @@
-package com.competablefuture.core;
+package com.competablefuture.service;
 
 import com.competablefuture.model.GitHubContributor;
 import com.competablefuture.model.GitHubRepo;

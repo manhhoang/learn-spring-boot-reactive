@@ -1,4 +1,4 @@
-package com.competablefuture.core;
+package com.competablefuture.service;
 
 import com.competablefuture.model.FacebookUser;
 import org.springframework.stereotype.Component;

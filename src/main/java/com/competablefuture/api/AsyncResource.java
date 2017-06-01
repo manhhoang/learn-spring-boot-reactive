@@ -1,7 +1,7 @@
 package com.competablefuture.api;
 
-import com.competablefuture.core.FacebookService;
-import com.competablefuture.core.GitHubService;
+import com.competablefuture.service.FacebookService;
+import com.competablefuture.service.GitHubService;
 import com.competablefuture.model.FacebookUser;
 import com.competablefuture.model.GitHubContributor;
 import com.competablefuture.model.GitHubRepo;
