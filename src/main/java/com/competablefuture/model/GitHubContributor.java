@@ -1,4 +1,4 @@
-package com.async.model;
+package com.competablefuture.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

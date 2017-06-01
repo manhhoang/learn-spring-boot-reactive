@@ -1,4 +1,4 @@
-package com.async.utils;
+package com.competablefuture.utils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

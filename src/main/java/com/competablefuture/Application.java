@@ -1,6 +1,6 @@
-package com.async;
+package com.competablefuture;
 
-import com.async.api.AsyncResource;
+import com.competablefuture.api.AsyncResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

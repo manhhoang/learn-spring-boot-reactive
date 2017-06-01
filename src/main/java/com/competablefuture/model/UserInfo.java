@@ -1,4 +1,4 @@
-package com.async.model;
+package com.competablefuture.model;
 
 public class UserInfo {
     private final GitHubUser gitHubUser;

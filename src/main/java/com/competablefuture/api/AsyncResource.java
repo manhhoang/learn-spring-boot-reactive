@@ -1,13 +1,13 @@
-package com.async.api;
+package com.competablefuture.api;
 
-import com.async.core.FacebookService;
-import com.async.core.GitHubService;
-import com.async.model.FacebookUser;
-import com.async.model.GitHubContributor;
-import com.async.model.GitHubRepo;
-import com.async.model.GitHubUser;
-import com.async.model.UserInfo;
-import com.async.utils.Futures;
+import com.competablefuture.core.FacebookService;
+import com.competablefuture.core.GitHubService;
+import com.competablefuture.model.FacebookUser;
+import com.competablefuture.model.GitHubContributor;
+import com.competablefuture.model.GitHubRepo;
+import com.competablefuture.model.GitHubUser;
+import com.competablefuture.model.UserInfo;
+import com.competablefuture.utils.Futures;
 import org.springframework.core.task.TaskExecutor;
 
 import javax.inject.Inject;

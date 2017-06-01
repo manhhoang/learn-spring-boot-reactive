@@ -1,6 +1,6 @@
-package com.async.core;
+package com.competablefuture.core;
 
-import com.async.model.FacebookUser;
+import com.competablefuture.model.FacebookUser;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.ClientBuilder;
