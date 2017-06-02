@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.jd</groupId>
-	<artifactId>spring-boot</artifactId>
+	<artifactId>spring-boot-reactive</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>spring-boot</name>
-	<description>Spring Boot</description>
+	<name>spring-boot-reactive</name>
+	<description>Spring Boot Reactive</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
