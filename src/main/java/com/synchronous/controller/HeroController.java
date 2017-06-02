@@ -1,8 +1,8 @@
-package com.synchronous.controllers;
+package com.synchronous.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synchronous.exception.ApiException;
-import com.synchronous.models.Hero;
+import com.synchronous.model.Hero;
 import com.synchronous.repository.HeroRepository;
 import com.synchronous.service.HeroServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

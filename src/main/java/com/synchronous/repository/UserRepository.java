@@ -1,6 +1,6 @@
 package com.synchronous.repository;
 
-import com.synchronous.models.User;
+import com.synchronous.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

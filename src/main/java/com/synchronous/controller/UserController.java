@@ -1,7 +1,7 @@
-package com.synchronous.controllers;
+package com.synchronous.controller;
 
 import com.synchronous.exception.ApiException;
-import com.synchronous.models.User;
+import com.synchronous.model.User;
 import com.synchronous.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

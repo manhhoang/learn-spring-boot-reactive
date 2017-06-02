@@ -1,4 +1,4 @@
-package com.synchronous.models;
+package com.synchronous.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

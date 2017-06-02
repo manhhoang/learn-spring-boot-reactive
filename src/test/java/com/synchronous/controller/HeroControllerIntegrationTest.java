@@ -1,9 +1,9 @@
-package com.synchronous.controllers;
+package com.synchronous.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synchronous.exception.ErrorResponse;
-import com.synchronous.models.Hero;
+import com.synchronous.model.Hero;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

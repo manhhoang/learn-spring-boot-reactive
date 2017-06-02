@@ -1,6 +1,6 @@
 package com.synchronous.service;
 
-import com.synchronous.models.Hero;
+import com.synchronous.model.Hero;
 import com.synchronous.repository.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.synchronous.service;
 
-import com.synchronous.models.User;
+import com.synchronous.model.User;
 import com.synchronous.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

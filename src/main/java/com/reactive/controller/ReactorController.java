@@ -1,4 +1,4 @@
-package com.reactive.web;
+package com.reactive.controller;
 
 
 import com.reactive.model.MessageAcknowledgement;

@@ -1,6 +1,6 @@
 package com.synchronous.service;
 
-import com.synchronous.models.Hero;
+import com.synchronous.model.Hero;
 
 import java.util.List;
 

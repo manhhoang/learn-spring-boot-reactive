@@ -1,4 +1,4 @@
-package com.synchronous.controllers;
+package com.synchronous.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.synchronous.models.Hero;
+import com.synchronous.model.Hero;
 import com.synchronous.repository.HeroRepository;
 import org.junit.Before;
 import org.junit.Test;

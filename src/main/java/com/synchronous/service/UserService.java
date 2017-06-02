@@ -1,6 +1,6 @@
 package com.synchronous.service;
 
-import com.synchronous.models.User;
+import com.synchronous.model.User;
 
 import java.util.List;
 

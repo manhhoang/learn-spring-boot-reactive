@@ -1,8 +1,8 @@
-package com.synchronous.controllers;
+package com.synchronous.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synchronous.models.User;
+import com.synchronous.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
