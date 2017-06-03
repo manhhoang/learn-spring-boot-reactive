@@ -83,7 +83,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>com.synchronous.Application</start-class>
+		<start-class>com.completablefuture_swagger.Application</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
