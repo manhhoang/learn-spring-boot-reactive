@@ -1,4 +1,4 @@
-package com.competablefuture.utils;
+package com.completablefuture.utils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

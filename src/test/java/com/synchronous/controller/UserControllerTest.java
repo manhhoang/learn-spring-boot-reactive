@@ -2,8 +2,7 @@ package com.synchronous.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synchronous.exception.ErrorResponse;
-import com.synchronous.model.Hero;
+import com.synchronous.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,17 +15,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class HeroControllerIntegrationTest {
+public class UserControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -37,12 +33,12 @@ public class HeroControllerIntegrationTest {
     }
 
     @Test
-    public void testGetAllHeroButEmpty() throws IOException {
+    public void testGetAllUsers() throws IOException {
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
         header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
         HttpEntity<String> entity = new HttpEntity<>(header);
 
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/heroes", String.class, entity);
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/users", String.class, entity);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -51,52 +47,44 @@ public class HeroControllerIntegrationTest {
     }
 
     @Test
-    public void testCreateSuperHeroSuccess() throws IOException {
-        Hero hero = new Hero();
-        hero.setName("Supper Man");
+    public void testCreateUserSuccess() throws IOException {
+        User user = new User();
+        user.setUsername("Test");
+        user.setPassword("12345");
 
         ObjectMapper mapper = new ObjectMapper();
-        String requestBody = mapper.writeValueAsString(hero);
+        String requestBody = mapper.writeValueAsString(user);
 
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
         header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
         HttpEntity<String> entity = new HttpEntity<>(requestBody, header);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/hero/create", entity, String.class);
+        ResponseEntity<User> response = restTemplate.postForEntity("/api/user/create", entity, User.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        if(response.getStatusCode() == HttpStatus.OK) {
-            Hero heroCreated = objectMapper.readValue(response.getBody(), Hero.class);
-            assertThat(heroCreated.getHeroId(), notNullValue());
-            assertThat(heroCreated.getName(), equalTo("Supper Man"));
-            assertThat(heroCreated.getAllies(), nullValue());
-        } else {
-            ErrorResponse error = objectMapper.readValue(response.getBody(), ErrorResponse.class);
-            assertThat(error.getErrorCode(), equalTo("100"));
-            assertThat(error.getErrorMessage(), equalTo("Hero is exist"));
-        }
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(response.getBody().getUsername(), equalTo("Test"));
+        assertNotEquals(response.getBody().getId(), null);
     }
 
     @Test
-    public void testGetDetailASuperHeroWithoutAlly() throws IOException {
-        Hero hero = new Hero();
-        hero.setName("Supper Man");
+    public void testFindUserByName() throws IOException {
+        User user = new User();
+        user.setUsername("Test");
+        user.setPassword("12345");
 
         ObjectMapper mapper = new ObjectMapper();
-        String requestBody = mapper.writeValueAsString(hero);
+        String requestBody = mapper.writeValueAsString(user);
 
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
         header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
         HttpEntity<String> entity = new HttpEntity<>(requestBody, header);
 
-        restTemplate.postForEntity("/api/hero/create", entity, Hero.class);
+        restTemplate.postForEntity("/api/user/create", entity, User.class);
 
-        ResponseEntity<String> response = restTemplate.getForEntity("/api/heroes", String.class);
+        ResponseEntity<User> response = restTemplate.getForEntity("/api/user/Test", User.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Hero> heroCreated = objectMapper.readValue(response.getBody(), ArrayList.class);
-        assertThat(heroCreated, notNullValue());
+        assertThat(response.getBody().getUsername(), equalTo("Test"));
+        assertThat(response.getBody().getId(), equalTo(1l));
     }
 }

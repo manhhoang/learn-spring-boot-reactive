@@ -1,4 +1,4 @@
-package com.competablefuture.model;
+package com.completablefuture.model;
 
 public class UserInfo {
     private final GitHubUser gitHubUser;

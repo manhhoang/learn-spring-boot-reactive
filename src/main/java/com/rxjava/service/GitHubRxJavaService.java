@@ -1,6 +1,6 @@
 package com.rxjava.service;
 
-import com.competablefuture.model.GitHubUser;
+import com.completablefuture.model.GitHubUser;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.ClientBuilder;

@@ -1,13 +1,13 @@
-package com.competablefuture.api;
+package com.completablefuture.api;
 
-import com.competablefuture.service.FacebookService;
-import com.competablefuture.service.GitHubService;
-import com.competablefuture.model.FacebookUser;
-import com.competablefuture.model.GitHubContributor;
-import com.competablefuture.model.GitHubRepo;
-import com.competablefuture.model.GitHubUser;
-import com.competablefuture.model.UserInfo;
-import com.competablefuture.utils.Futures;
+import com.completablefuture.service.FacebookService;
+import com.completablefuture.service.GitHubService;
+import com.completablefuture.model.FacebookUser;
+import com.completablefuture.model.GitHubContributor;
+import com.completablefuture.model.GitHubRepo;
+import com.completablefuture.model.GitHubUser;
+import com.completablefuture.model.UserInfo;
+import com.completablefuture.utils.Futures;
 import org.springframework.core.task.TaskExecutor;
 
 import javax.inject.Inject;

@@ -1,8 +1,8 @@
-package com.competablefuture.service;
+package com.completablefuture.service;
 
-import com.competablefuture.model.GitHubContributor;
-import com.competablefuture.model.GitHubRepo;
-import com.competablefuture.model.GitHubUser;
+import com.completablefuture.model.GitHubContributor;
+import com.completablefuture.model.GitHubRepo;
+import com.completablefuture.model.GitHubUser;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.ClientBuilder;

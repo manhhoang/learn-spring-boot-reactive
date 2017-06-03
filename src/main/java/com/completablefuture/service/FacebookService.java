@@ -1,6 +1,6 @@
-package com.competablefuture.service;
+package com.completablefuture.service;
 
-import com.competablefuture.model.FacebookUser;
+import com.completablefuture.model.FacebookUser;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.ClientBuilder;

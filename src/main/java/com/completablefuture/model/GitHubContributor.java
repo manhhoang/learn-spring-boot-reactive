@@ -1,4 +1,4 @@
-package com.competablefuture.model;
+package com.completablefuture.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
