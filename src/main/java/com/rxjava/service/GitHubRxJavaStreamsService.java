@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 @Service
-public class GitHubRxJavaService {
+public class GitHubRxJavaStreamsService {
 
     private final WebTarget target = ClientBuilder.newClient().target("https://api.github.com/");
 
@@ -44,7 +44,7 @@ public class GitHubRxJavaService {
     }
 
     public static void main(String[] args) {
-        GitHubRxJavaService gitHubRxJavaService = new GitHubRxJavaService();
+        GitHubRxJavaStreamsService gitHubRxJavaService = new GitHubRxJavaStreamsService();
         gitHubRxJavaService.findRepoByUser("test");
     }
 }
