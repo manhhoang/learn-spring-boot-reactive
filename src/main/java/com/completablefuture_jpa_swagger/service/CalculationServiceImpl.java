@@ -1,19 +1,17 @@
-package com.completablefuture_swagger.service;
+package com.completablefuture_jpa_swagger.service;
 
-import com.completablefuture_swagger.exception.ApiException;
-import com.completablefuture_swagger.model.Task;
-import com.completablefuture_swagger.repository.CalculationRepository;
+import com.completablefuture_jpa_swagger.exception.ApiException;
+import com.completablefuture_jpa_swagger.model.Task;
+import com.completablefuture_jpa_swagger.repository.CalculationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import static com.completablefuture_swagger.exception.ApiException.SAVE_ERROR_CODE;
-import static com.completablefuture_swagger.exception.ApiException.SAVE_ERROR_MESSAGE;
+import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_CODE;
+import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_MESSAGE;
 
 @Service
 public class CalculationServiceImpl implements CalculationService {
@@ -44,20 +42,8 @@ public class CalculationServiceImpl implements CalculationService {
 
     @Override
     public CompletableFuture<Task> findByTaskId(String taskId) {
-        return CompletableFuture.supplyAsync(() -> calculationRepository.findByTaskId(taskId))
-                .thenApply(this::calculateAverageDuration);
-    }
+        return CompletableFuture.supplyAsync(() -> calculationRepository.findTaskAverageDuration(taskId))
+                .thenApply(average -> new Task(taskId, average.orElse(0d)));
 
-    private Task calculateAverageDuration(Optional<List<Task>> tasks) {
-        long totalDuration = 0;
-        String foundTaskId = "";
-        for(Task task : tasks.get()) {
-            totalDuration += task.getDuration();
-            foundTaskId = task.getTaskId();
-        }
-        int size = tasks.get().size();
-        long averageDuration = size != 0 ? totalDuration/size : 0;
-
-        return new Task(foundTaskId, averageDuration);
     }
 }

@@ -1,4 +1,4 @@
-package com.completablefuture_swagger.config;
+package com.completablefuture_jpa_swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.completablefuture_swagger.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.completablefuture_jpa_swagger.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

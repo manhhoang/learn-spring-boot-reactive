@@ -1,7 +1,7 @@
-package com.completablefuture_swagger.controller;
+package com.completablefuture_jpa_swagger.controller;
 
-import com.completablefuture_swagger.model.Task;
-import com.completablefuture_swagger.service.CalculationService;
+import com.completablefuture_jpa_swagger.model.Task;
+import com.completablefuture_jpa_swagger.service.CalculationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

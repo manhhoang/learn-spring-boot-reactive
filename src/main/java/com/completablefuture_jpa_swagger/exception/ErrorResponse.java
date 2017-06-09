@@ -1,17 +1,9 @@
-package com.completablefuture_swagger.exception;
+package com.completablefuture_jpa_swagger.exception;
 
-public class ApiException extends RuntimeException {
-
-    public static final String SAVE_ERROR_CODE = "100";
-    public static final String SAVE_ERROR_MESSAGE = "Fail to save new task";
+public class ErrorResponse {
 
     private String errorCode;
     private String errorMessage;
-
-    public ApiException(String errorCode, String errorMessage) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
-    }
 
     public String getErrorCode() {
         return errorCode;

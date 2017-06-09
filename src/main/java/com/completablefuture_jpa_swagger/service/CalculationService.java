@@ -1,6 +1,6 @@
-package com.completablefuture_swagger.service;
+package com.completablefuture_jpa_swagger.service;
 
-import com.completablefuture_swagger.model.Task;
+import com.completablefuture_jpa_swagger.model.Task;
 
 import java.util.concurrent.CompletableFuture;
 

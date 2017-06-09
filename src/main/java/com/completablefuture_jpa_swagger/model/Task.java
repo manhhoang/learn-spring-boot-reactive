@@ -1,4 +1,4 @@
-package com.completablefuture_swagger.model;
+package com.completablefuture_jpa_swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -24,13 +25,16 @@ public class Task {
     @NotNull
     private long duration;
 
+    @Transient
+    private double average;
+
     public Task() {
 
     }
 
-    public Task(String taskId, long duration) {
+    public Task(String taskId, double average) {
         this.taskId = taskId;
-        this.duration = duration;
+        this.average = average;
     }
 
     public int getId() {
@@ -55,5 +59,13 @@ public class Task {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public void setAverage(double average) {
+        this.average = average;
     }
 }

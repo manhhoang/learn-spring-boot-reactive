@@ -1,4 +1,4 @@
-package com.completablefuture_swagger.exception;
+package com.completablefuture_jpa_swagger.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

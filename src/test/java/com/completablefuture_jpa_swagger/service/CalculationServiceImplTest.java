@@ -1,7 +1,7 @@
-package com.completablefuture_swagger.service;
+package com.completablefuture_jpa_swagger.service;
 
-import com.completablefuture_swagger.model.Task;
-import com.completablefuture_swagger.repository.CalculationRepository;
+import com.completablefuture_jpa_swagger.model.Task;
+import com.completablefuture_jpa_swagger.repository.CalculationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
