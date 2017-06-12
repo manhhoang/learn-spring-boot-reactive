@@ -33,7 +33,7 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     private Task handleCreateResponse(Task task) {
-        if(task == null) {
+        if (task == null) {
             logger.info("Failed creating task in CalculationService");
             throw new ApiException(SAVE_ERROR_CODE, SAVE_ERROR_MESSAGE);
         }
@@ -43,7 +43,14 @@ public class CalculationServiceImpl implements CalculationService {
     @Override
     public CompletableFuture<Task> findByTaskId(String taskId) {
         return CompletableFuture.supplyAsync(() -> calculationRepository.findTaskAverageDuration(taskId))
-                .thenApply(average -> new Task(taskId, average.orElse(0d)));
-
+                .thenApply(average -> {
+                    if (average == null)
+                        return new Task("", 0d);
+                    else
+                        return new Task(taskId, average.orElse(0d));
+                }).exceptionally(e -> {
+                    logger.info("Failed to find task in CalculationService");
+                    throw new ApiException("200", "Failed to find task in CalculationService");
+                });
     }
 }
