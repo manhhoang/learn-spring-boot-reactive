@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.AsyncRestTemplate;
 
 @Configuration
-@ComponentScan
+@ComponentScan("com.listenablefuture")
 @EnableAutoConfiguration
 public class Application {
 

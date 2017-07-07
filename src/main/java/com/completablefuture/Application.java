@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
-@ComponentScan
+@ComponentScan("com.completablefuture")
 @EnableAutoConfiguration
 @EnableAsync
 public class Application extends ResourceConfig {
