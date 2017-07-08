@@ -8,8 +8,6 @@ import com.spring_standalone.service.APIDelegate;
 import com.spring_standalone.service.APILookup;
 import com.spring_standalone.service.APIType;
 
-import java.util.concurrent.CompletableFuture;
-
 import static com.spring_standalone.utils.Constants.IMDB;
 import static com.spring_standalone.utils.Constants.MUSIC;
 
@@ -27,24 +25,25 @@ public class Application {
         apiDelegate.setLookupService(new APILookup());
         if(api.equalsIgnoreCase(IMDB)) {
             apiDelegate.setServiceType(APIType.IMDB);
-            CompletableFuture<TheMovieDB> theMovieDBFuture = apiDelegate.doSearch(search);
-            printTheMovieDB(theMovieDBFuture.get());
         } else if(api.equalsIgnoreCase(MUSIC)){
             apiDelegate.setServiceType(APIType.MUSIC);
-            CompletableFuture<LastMusic> lastMusicFuture = apiDelegate.doSearch(search);
-            printLastMusic(lastMusicFuture.get());
         }
+        print(apiDelegate.doSearch(search).get());
     }
 
-    private static void printTheMovieDB(TheMovieDB theMovieDB) {
-        for(Movie movie : theMovieDB.getMovies()) {
-            System.out.println("Title: " + movie.getTitle() + " | Release Date: " + movie.getReleaseDate());
+    private static void print(Object object) {
+        if(object instanceof TheMovieDB) {
+            TheMovieDB theMovieDB = (TheMovieDB)object;
+            for(Movie movie : theMovieDB.getMovies()) {
+                System.out.println("Title: " + movie.getTitle() + " | Release Date: " + movie.getReleaseDate());
+            }
         }
-    }
+        if(object instanceof LastMusic) {
+            LastMusic lastMusic = (LastMusic) object;
+            for(Album album : lastMusic.getMusic().getAlbumMatches().getAlbums()) {
+                System.out.println("Name: " + album.getName() + " | Artist: " + album.getArtist());
+            }
+        }
 
-    private static void printLastMusic(LastMusic lastMusic) {
-        for(Album album : lastMusic.getMusic().getAlbumMatches().getAlbums()) {
-            System.out.println("Name: " + album.getName() + " | Artist: " + album.getArtist());
-        }
     }
 }
