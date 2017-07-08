@@ -1,11 +1,14 @@
 package com.spring_standalone.service;
 
 import com.spring_standalone.exception.AppException;
-import com.spring_standalone.model.Movie;
-import com.spring_standalone.model.TheMovieDB;
+import com.spring_standalone.model.Album;
+import com.spring_standalone.model.AlbumMatches;
+import com.spring_standalone.model.LastMusic;
+import com.spring_standalone.model.Music;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,31 +18,38 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class LastMusicService {
 
-    private static final String LAST_MUSIC_URL =
-            "http://ws.audioscrobbler.com/2.0/?method=album.search&album={musicName}&api_key=a4444f25ea835fd13aa26fea082b6831&format=json";
+    @Value("${lastmusic.key}")
+    private String lastMusicKey;
 
-    //http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=a4444f25ea835fd13aa26fea082b6831&format=json
+    @Value("${lastmusic.url}")
+    private String lastMusicUrl;
+
     private static final Logger logger = LoggerFactory.getLogger(LastMusicService.class);
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Cacheable("music")
-    public CompletableFuture<TheMovieDB> search(String albumName) {
-        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(LAST_MUSIC_URL, TheMovieDB.class, albumName))
-                .thenApply(theMovieDB -> {
-                    TheMovieDB retTheMovieDB = new TheMovieDB();
+    public CompletableFuture<LastMusic> search(String albumName) {
+        final String url = lastMusicUrl + lastMusicKey;
+        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, LastMusic.class, albumName))
+                .thenApply(lastMusic -> {
+                    LastMusic retLastMusic = new LastMusic();
+                    Music music = new Music();
+                    AlbumMatches albumMatches = new AlbumMatches();
                     int count = 1;
-                    for(Movie movie: theMovieDB.getBody().getMovies()){
+                    for(Album album: lastMusic.getBody().getMusic().getAlbumMatches().getAlbums()) {
                         if(count > 4)
                             break;
+                        albumMatches.addAlbum(album);
                         count++;
-                        retTheMovieDB.addMovie(movie);
                     }
-                    return retTheMovieDB;
+                    music.setAlbumMatches(albumMatches);
+                    retLastMusic.setMusic(music);
+                    return retLastMusic;
                 }).exceptionally(e -> {
-                    logger.error("Failed to get movie from api.themoviedb.org");
-                    throw new AppException("100", "Failed to get movie from api.themoviedb.org");
+                    logger.error("Failed to get movie from last music");
+                    throw new AppException("100", "Failed to get movie from last music");
                 });
     }
 }

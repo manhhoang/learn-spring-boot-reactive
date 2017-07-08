@@ -2,10 +2,16 @@ package com.spring_standalone.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class LastMusic {
 
-    @JsonProperty("albummatches")
-    private List<Album> albums;
+    @JsonProperty("results")
+    private Music music;
+
+    public Music getMusic() {
+        return music;
+    }
+
+    public void setMusic(Music music) {
+        this.music = music;
+    }
 }

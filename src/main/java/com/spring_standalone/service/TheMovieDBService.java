@@ -6,6 +6,7 @@ import com.spring_standalone.model.TheMovieDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,17 +16,21 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class TheMovieDBService {
 
-    private static final String THE_MOVIE_DB_URL =
-            "https://api.themoviedb.org/3/search/movie?api_key=ea7ba32805fa642f35979db217a46d59&query={movieName}";
+    @Value("${themoviedb.key}")
+    private String theMovieDbKey;
 
-    private static final Logger logger = LoggerFactory.getLogger(TheMovieDBService.class);
+    @Value("${themoviedb.url}")
+    private String theMovieDbUrl;
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @Cacheable("movies")
+    private static final Logger logger = LoggerFactory.getLogger(TheMovieDBService.class);
+
+    @Cacheable("movie")
     public CompletableFuture<TheMovieDB> search(String movieName) {
-        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(THE_MOVIE_DB_URL, TheMovieDB.class, movieName))
+        final String url = theMovieDbUrl + theMovieDbKey;
+        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, TheMovieDB.class, movieName))
                 .thenApply(theMovieDB -> {
                     TheMovieDB retTheMovieDB = new TheMovieDB();
                     int count = 1;
