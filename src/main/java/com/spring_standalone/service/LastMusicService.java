@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class LastMusicService {
+public class LastMusicService implements ProviderService<LastMusic> {
 
     @Value("${lastmusic.key}")
     private String lastMusicKey;
@@ -29,10 +29,11 @@ public class LastMusicService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Override
     @Cacheable("music")
-    public CompletableFuture<LastMusic> search(String albumName) {
+    public CompletableFuture<LastMusic> search(String name) {
         final String url = lastMusicUrl + lastMusicKey;
-        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, LastMusic.class, albumName))
+        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, LastMusic.class, name))
                 .thenApply(lastMusic -> {
                     LastMusic retLastMusic = new LastMusic();
                     Music music = new Music();

@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class TheMovieDBService {
+public class TheMovieDBService implements ProviderService<TheMovieDB> {
 
     @Value("${themoviedb.key}")
     private String theMovieDbKey;
@@ -27,10 +27,11 @@ public class TheMovieDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(TheMovieDBService.class);
 
+    @Override
     @Cacheable("movie")
-    public CompletableFuture<TheMovieDB> search(String movieName) {
+    public CompletableFuture<TheMovieDB> search(String name) {
         final String url = theMovieDbUrl + theMovieDbKey;
-        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, TheMovieDB.class, movieName))
+        return CompletableFuture.supplyAsync(() -> restTemplate.getForEntity(url, TheMovieDB.class, name))
                 .thenApply(theMovieDB -> {
                     TheMovieDB retTheMovieDB = new TheMovieDB();
                     int count = 1;
