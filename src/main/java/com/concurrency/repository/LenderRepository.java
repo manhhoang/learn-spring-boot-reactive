@@ -1,5 +1,6 @@
 package com.concurrency.repository;
 
+import com.concurrency.exception.AppException;
 import com.concurrency.model.Lender;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
@@ -10,16 +11,19 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class LenderRepository {
 
     final HeaderColumnNameTranslateMappingStrategy<Lender> beanStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
 
-    public List<Lender> findAllLenders() throws IOException {
+    List<Lender> lenders = new ArrayList<>();
+
+    public List<Lender> findAllLenders(String marketFile) {
+        if (!lenders.isEmpty())
+            return lenders;
+
         beanStrategy.setType(Lender.class);
         Map<String, String> columnMapping = new HashMap<>();
         columnMapping.put("Lender", "name");
@@ -28,8 +32,14 @@ public class LenderRepository {
         beanStrategy.setColumnMapping(columnMapping);
 
         final CsvToBean<Lender> csvToBean = new CsvToBean<>();
-        final File file = new ClassPathResource("lender_data.csv").getFile();
-        final CSVReader reader = new CSVReader(new FileReader(file));
-        return csvToBean.parse(beanStrategy, reader);
+        try {
+            final File file = new ClassPathResource(marketFile).getFile();
+            final CSVReader reader = new CSVReader(new FileReader(file));
+            lenders = csvToBean.parse(beanStrategy, reader);
+        } catch (IOException ex) {
+            throw new AppException("100", "Failed to load market data file");
+        }
+        lenders.sort(Comparator.comparing(Lender::getRate));
+        return lenders;
     }
 }

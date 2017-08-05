@@ -22,8 +22,8 @@ public class LenderRepositoryTest {
     }
 
     @Test
-    public void testLoadAllLender() throws IOException{
-        List<Lender> lenders = lenderRepository.findAllLenders();
+    public void testFindAllLender() throws IOException{
+        List<Lender> lenders = lenderRepository.findAllLenders("lender_data.csv");
         assertEquals(7, lenders.size());
     }
 }
