@@ -31,6 +31,7 @@ public class Application {
         if(loan.getRequestedAmount() == 0) {
             System.out.println("There are no loan available this time!");
         }
-        System.out.println();
+        System.out.println(Math.round(loan.getRate() * 100 * 100.0)/100.0 + "%");
+        System.out.println(loan.getRequestedAmount());
     }
 }
