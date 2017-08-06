@@ -11,12 +11,12 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class LoanServiceTest {
+public class LoanServiceConcurrencyTest {
 
     @InjectMocks
     LoanService loanService;
@@ -30,7 +30,33 @@ public class LoanServiceTest {
     }
 
     @Test
-    public void testGetAvailableLoan() throws Exception {
+    public void testGetAvailableLoanConcurrency() throws Exception {
+        final int numberThreads = 100;
+        final ExecutorService executorService = Executors.newFixedThreadPool(numberThreads);
+        final CountDownLatch allExecutorThreadsReady = new CountDownLatch(numberThreads);
+        final CountDownLatch afterInitBlocker = new CountDownLatch(1);
+        final CountDownLatch allDone = new CountDownLatch(numberThreads);
+        for (int i = 0; i < numberThreads; i++) {
+            executorService.submit(() -> {
+                allExecutorThreadsReady.countDown();
+                try {
+                    afterInitBlocker.await();
+                    getAvailableLoan();
+                } catch (final Exception e) {
+                } finally {
+                    allDone.countDown();
+                }
+            });
+        }
+        // wait until all threads are ready
+        allExecutorThreadsReady.await(numberThreads * 10, TimeUnit.MILLISECONDS);
+        // start all test runners
+        afterInitBlocker.countDown();
+        allDone.await(30, TimeUnit.SECONDS);
+        executorService.shutdownNow();
+    }
+
+    private void getAvailableLoan() throws Exception {
         String marketFile = "lender_data.csv";
         double loanAmount = 1000;
         List<Lender> lenders = new ArrayList<>();
