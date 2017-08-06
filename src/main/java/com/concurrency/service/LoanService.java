@@ -4,6 +4,7 @@ import com.concurrency.exception.AppException;
 import com.concurrency.model.Lender;
 import com.concurrency.model.Loan;
 import com.concurrency.repository.LenderRepository;
+import com.concurrency.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,11 @@ public class LoanService {
                         total += (double)entry.getKey() * (double)entry.getValue();
                     }
                     Loan loan = new Loan();
-                    loan.setRate(total/loanAmount);
+                    loan.setRate(Utils.roundOne(total/loanAmount * 100));
                     loan.setRequestedAmount(loanAmount);
+                    final double totalRepay = loanAmount + calculateRepayInterest(loanAmount, loan.getRate());
+                    loan.setMonthlyRepayment(Utils.roundTwo(totalRepay/36));
+                    loan.setTotalRepayment(loan.getMonthlyRepayment() * 36);
                     return loan;
                 }).exceptionally(e -> {
                     logger.error("There are no quotes available this time!");
@@ -57,5 +61,15 @@ public class LoanService {
         }
 
         return lenderMap;
+    }
+
+    private double calculateRepayInterest(double loanAmount, double rate) {
+        double interestAmount = 0;
+        double monthlyAmount = loanAmount/36;
+        while(loanAmount > 0) {
+            interestAmount += (loanAmount/100 * rate*3) / 36;
+            loanAmount -= monthlyAmount;
+        }
+        return interestAmount;
     }
 }

@@ -42,7 +42,7 @@ public class Application {
             System.out.println("There are no quotes available this time!");
         } else {
             System.out.println("Requested amount: " + loan.getRequestedAmount());
-            System.out.println("Rate: " + Math.round(loan.getRate() * 100 * 100.0)/100.0 + "%");
+            System.out.println("Rate: " + loan.getRate() + "%");
             System.out.println("Monthly repayment: " + loan.getMonthlyRepayment());
             System.out.println("Total repayment: " + loan.getTotalRepayment());
         }
