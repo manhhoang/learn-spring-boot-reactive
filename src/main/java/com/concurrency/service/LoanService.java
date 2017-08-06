@@ -33,8 +33,8 @@ public class LoanService {
                     loan.setRequestedAmount(loanAmount);
                     return loan;
                 }).exceptionally(e -> {
-                    logger.error("There are no loan available this time!");
-                    throw new AppException("100", "There are no loan available this time!");
+                    logger.error("There are no quotes available this time!");
+                    throw new AppException("100", "There are no quotes available this time!");
                 });
     }
 
@@ -53,7 +53,7 @@ public class LoanService {
             }
         }
         if (total < loanAmount) {
-            throw new AppException("100", "There are no loan available this time!");
+            throw new AppException("100", "There are no quotes available this time!");
         }
 
         return lenderMap;
