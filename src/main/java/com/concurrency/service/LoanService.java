@@ -21,23 +21,15 @@ public class LoanService {
     private static final Logger logger = LoggerFactory.getLogger(LoanService.class);
 
     public CompletableFuture<Loan> getAvailableLoan(String marketFile, double loanAmount) {
-        return CompletableFuture.supplyAsync(() -> lenderRepository.findAllLenders(marketFile))
+        return CompletableFuture.supplyAsync(() -> lenderRepository.findAllLendersSortedByRate(marketFile))
                 .thenApply(lenders -> {
-                    double rate = 0;
-                    double available = 0;
-                    List<Lender> lenderList = getLenderList(lenders, loanAmount);
-                    for (int i = 0; i < lenderList.size() - 1; i++) {
-                        if (i == 0) {
-                            rate = (lenderList.get(i).getRate() * (lenderList.get(i + 1).getAvailable() / lenderList.get(i).getAvailable()) + lenderList.get(i + 1).getRate()) / 2;
-                            available += lenderList.get(i).getAvailable() + lenderList.get(i + 1).getAvailable();
-                            i = 1;
-                        } else {
-                            rate = (rate * (lenderList.get(i + 1).getAvailable() / available) + lenderList.get(i + 1).getRate()) / 2;
-                            available += lenderList.get(i + 1).getAvailable();
-                        }
+                    double total = 0;
+                    Map<Double, Double> lenderMap = getLenderMap(lenders, loanAmount);
+                    for (Map.Entry entry : lenderMap.entrySet()) {
+                        total += (double)entry.getKey() * (double)entry.getValue();
                     }
                     Loan loan = new Loan();
-                    loan.setRate(rate);
+                    loan.setRate(total/loanAmount);
                     loan.setRequestedAmount(loanAmount);
                     return loan;
                 }).exceptionally(e -> {
@@ -46,7 +38,7 @@ public class LoanService {
                 });
     }
 
-    private List<Lender> getLenderList(List<Lender> lenders, double loanAmount) {
+    private Map<Double, Double> getLenderMap(List<Lender> lenders, double loanAmount) {
         Map<Double, Double> lenderMap = new HashMap<>();
         double total = 0;
         for (Lender lender : lenders) {
@@ -63,13 +55,7 @@ public class LoanService {
         if (total < loanAmount) {
             throw new AppException("100", "There are no loan available this time!");
         }
-        List<Lender> lendersList = new ArrayList<>();
-        for (Map.Entry entry : lenderMap.entrySet()) {
-            Lender lender = new Lender();
-            lender.setRate((double) entry.getKey());
-            lender.setAvailable((double) entry.getValue());
-            lendersList.add(lender);
-        }
-        return lendersList;
+
+        return lenderMap;
     }
 }

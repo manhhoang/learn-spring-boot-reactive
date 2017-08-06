@@ -11,7 +11,7 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
         String marketFile = "lender_data.csv";
-        double loanAmount = 1000;
+        double loanAmount = 10000;
         printLoan(getAvailableLoan(marketFile, loanAmount));
     }
 
@@ -31,7 +31,9 @@ public class Application {
         if(loan.getRequestedAmount() == 0) {
             System.out.println("There are no loan available this time!");
         }
-        System.out.println(Math.round(loan.getRate() * 100 * 100.0)/100.0 + "%");
-        System.out.println(loan.getRequestedAmount());
+        System.out.println("Requested amount: " + loan.getRequestedAmount());
+        System.out.println("Rate: " + Math.round(loan.getRate() * 100 * 100.0)/100.0 + "%");
+        System.out.println("Monthly repayment: " + loan.getMonthlyRepayment());
+        System.out.println("Total repayment: " + loan.getTotalRepayment());
     }
 }

@@ -20,7 +20,7 @@ public class LenderRepository {
 
     List<Lender> lenders = new ArrayList<>();
 
-    public List<Lender> findAllLenders(String marketFile) {
+    public List<Lender> findAllLendersSortedByRate(String marketFile) {
         if (!lenders.isEmpty())
             return lenders;
 

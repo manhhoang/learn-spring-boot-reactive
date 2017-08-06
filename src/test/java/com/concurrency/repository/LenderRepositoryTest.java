@@ -23,7 +23,7 @@ public class LenderRepositoryTest {
 
     @Test
     public void testFindAllLender() throws IOException{
-        List<Lender> lenders = lenderRepository.findAllLenders("lender_data.csv");
+        List<Lender> lenders = lenderRepository.findAllLendersSortedByRate("lender_data.csv");
         assertEquals(7, lenders.size());
     }
 }
