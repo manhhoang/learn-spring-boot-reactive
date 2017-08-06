@@ -27,18 +27,18 @@ public class LoanService {
                     double total = 0;
                     Map<Double, Double> lenderMap = getLenderMap(lenders, loanAmount);
                     for (Map.Entry entry : lenderMap.entrySet()) {
-                        total += (double)entry.getKey() * (double)entry.getValue();
+                        total += (double) entry.getKey() * (double) entry.getValue();
                     }
                     Loan loan = new Loan();
-                    loan.setRate(Utils.roundOne(total/loanAmount * 100));
+                    loan.setRate(Utils.roundOne(total / loanAmount * 100));
                     loan.setRequestedAmount(loanAmount);
                     final double totalRepay = loanAmount + calculateRepayInterest(loanAmount, loan.getRate());
-                    loan.setMonthlyRepayment(Utils.roundTwo(totalRepay/36));
-                    loan.setTotalRepayment(loan.getMonthlyRepayment() * 36);
+                    loan.setMonthlyRepayment(Utils.roundTwo(totalRepay / 36));
+                    loan.setTotalRepayment(Utils.roundTwo(loan.getMonthlyRepayment() * 36));
                     return loan;
                 }).exceptionally(e -> {
-                    logger.error("There are no quotes available this time!");
-                    throw new AppException("100", "There are no quotes available this time!");
+                    logger.error("It is not possible to provide a quote at that time.");
+                    throw new AppException("100", "It is not possible to provide a quote at that time.");
                 });
     }
 
@@ -54,10 +54,11 @@ public class LoanService {
                     break;
             } else {
                 lenderMap.put(lender.getRate(), availableAmount + lender.getAvailable() - (total - loanAmount));
+                break;
             }
         }
         if (total < loanAmount) {
-            throw new AppException("100", "There are no quotes available this time!");
+            throw new AppException("100", "It is not possible to provide a quote at that time.");
         }
 
         return lenderMap;
@@ -65,9 +66,9 @@ public class LoanService {
 
     private double calculateRepayInterest(double loanAmount, double rate) {
         double interestAmount = 0;
-        double monthlyAmount = loanAmount/36;
-        while(loanAmount > 0) {
-            interestAmount += (loanAmount/100 * rate*3) / 36;
+        double monthlyAmount = loanAmount / 36;
+        while (loanAmount > 0) {
+            interestAmount += (loanAmount / 100 * rate * 3) / 36;
             loanAmount -= monthlyAmount;
         }
         return interestAmount;

@@ -23,7 +23,11 @@ public class Application {
         Loan loan = new Loan();
         final LoanService loanService = getService();
         try {
-            loan = loanService.getAvailableLoan(marketFile, loanAmount).get();
+            if(loanAmount >= 1000 && loanAmount <= 15000 && (loanAmount % 100 == 0)) {
+                loan = loanService.getAvailableLoan(marketFile, loanAmount).get();
+            } else {
+                loan.setValid(false);
+            }
         } catch (Exception ex) {
             loan.setRequestedAmount(0);
         }
@@ -32,19 +36,23 @@ public class Application {
 
     private static LoanService getService() {
         final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-        final LoanService loanService = (LoanService)ctx.getBean(LOAN_SERVICE);
+        final LoanService loanService = (LoanService) ctx.getBean(LOAN_SERVICE);
         ctx.close();
         return loanService;
     }
 
     private static void printLoan(Loan loan) {
-        if(loan.getRequestedAmount() == 0) {
-            System.out.println("There are no quotes available this time!");
+        if(!loan.isValid()) {
+            System.out.println("Loan has to be of any £100 increment between £1000 and £15000 inclusive.");
+            return;
+        }
+        if (loan.getRequestedAmount() == 0) {
+            System.out.println("It is not possible to provide a quote at that time.");
         } else {
-            System.out.println("Requested amount: " + loan.getRequestedAmount());
-            System.out.println("Rate: " + loan.getRate() + "%");
-            System.out.println("Monthly repayment: " + loan.getMonthlyRepayment());
-            System.out.println("Total repayment: " + loan.getTotalRepayment());
+            System.out.println("Requested amount: " + String.format("%.0f", loan.getRequestedAmount()));
+            System.out.println("Rate: " + String.format("%.01f", loan.getRate()) + "%");
+            System.out.println("Monthly repayment: " + String.format("%.02f", loan.getMonthlyRepayment()));
+            System.out.println("Total repayment: " + String.format("%.02f", loan.getTotalRepayment()));
         }
     }
 }

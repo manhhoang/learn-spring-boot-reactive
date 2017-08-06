@@ -10,6 +10,8 @@ public class Loan {
 
     private double totalRepayment;
 
+    private boolean valid = true;
+
     public double getRequestedAmount() {
         return requestedAmount;
     }
@@ -40,5 +42,13 @@ public class Loan {
 
     public void setTotalRepayment(double totalRepayment) {
         this.totalRepayment = totalRepayment;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }
