@@ -3,16 +3,12 @@ package com.concurrency;
 import com.concurrency.config.AppConfig;
 import com.concurrency.model.Loan;
 import com.concurrency.service.LoanService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static com.concurrency.utils.Constants.ERROR_MESSAGE;
 import static com.concurrency.utils.Constants.LOAN_SERVICE;
 
 public class Application {
-
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
         if(args.length < 2) {

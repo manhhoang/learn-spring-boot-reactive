@@ -73,6 +73,6 @@ public class LoanServiceConcurrencyTest {
         when(lenderRepository.findAllLendersSortedByRate(marketFile)).thenReturn(lenders);
         CompletableFuture<Loan> loanFuture = loanService.getAvailableLoan(marketFile, loanAmount);
         Loan loan = loanFuture.get();
-        assertEquals("0.07003999999999999", String.valueOf(loan.getRate()));
+        assertEquals("0.07", String.valueOf(loan.getRate()));
     }
 }
