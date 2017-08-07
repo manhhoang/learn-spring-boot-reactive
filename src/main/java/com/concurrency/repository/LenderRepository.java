@@ -5,13 +5,19 @@ import com.concurrency.model.Lender;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
-import org.springframework.core.io.ClassPathResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.concurrency.utils.Constants.ERROR_MESSAGE;
 
 @Repository
 public class LenderRepository {
@@ -19,6 +25,8 @@ public class LenderRepository {
     final HeaderColumnNameTranslateMappingStrategy<Lender> beanStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
 
     List<Lender> lenders = new ArrayList<>();
+
+    private static final Logger logger = LoggerFactory.getLogger(LenderRepository.class);
 
     public List<Lender> findAllLendersSortedByRate(String marketFile) {
         if (!lenders.isEmpty())
@@ -30,13 +38,14 @@ public class LenderRepository {
         columnMapping.put("Rate", "rate");
         columnMapping.put("Available", "available");
         beanStrategy.setColumnMapping(columnMapping);
-
         final CsvToBean<Lender> csvToBean = new CsvToBean<>();
         try {
-            final File file = new ClassPathResource(marketFile).getFile();
-            final CSVReader reader = new CSVReader(new FileReader(file));
-            lenders = csvToBean.parse(beanStrategy, reader);
-        } catch (IOException ex) {
+            FileInputStream fileInputStream = new FileInputStream("./" + marketFile);
+            final CSVReader csvReader = new CSVReader(new InputStreamReader(fileInputStream));
+            lenders = csvToBean.parse(beanStrategy, csvReader);
+            fileInputStream.close();
+        } catch (Exception ex) {
+            logger.error("Unable to load the market data file");
             throw new AppException("100", "Failed to load market data file");
         }
         lenders.sort(Comparator.comparing(Lender::getRate));

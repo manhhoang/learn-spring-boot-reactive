@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+
+import static com.concurrency.utils.Constants.ERROR_MESSAGE;
 
 @Service
 public class LoanService {
@@ -37,8 +40,8 @@ public class LoanService {
                     loan.setTotalRepayment(Utils.roundTwo(loan.getMonthlyRepayment() * 36));
                     return loan;
                 }).exceptionally(e -> {
-                    logger.error("It is not possible to provide a quote at that time.");
-                    throw new AppException("100", "It is not possible to provide a quote at that time.");
+                    logger.error(ERROR_MESSAGE);
+                    throw new AppException("100", ERROR_MESSAGE);
                 });
     }
 
@@ -58,7 +61,7 @@ public class LoanService {
             }
         }
         if (total < loanAmount) {
-            throw new AppException("100", "It is not possible to provide a quote at that time.");
+            throw new AppException("100", ERROR_MESSAGE);
         }
 
         return lenderMap;

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import static com.concurrency.utils.Constants.ERROR_MESSAGE;
 import static com.concurrency.utils.Constants.LOAN_SERVICE;
 
 public class Application {
@@ -14,8 +15,11 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
-        String marketFile = "lender_data.csv";
-        double loanAmount = 1000;
+        if(args.length < 2) {
+            System.out.println("Missing market file and loan amount arguments.");
+        }
+        String marketFile = args[0];
+        double loanAmount = Double.parseDouble(args[1]);
         printLoan(getAvailableLoan(marketFile, loanAmount));
     }
 
@@ -47,7 +51,7 @@ public class Application {
             return;
         }
         if (loan.getRequestedAmount() == 0) {
-            System.out.println("It is not possible to provide a quote at that time.");
+            System.out.println(ERROR_MESSAGE);
         } else {
             System.out.println("Requested amount: " + String.format("%.0f", loan.getRequestedAmount()));
             System.out.println("Rate: " + String.format("%.01f", loan.getRate()) + "%");
