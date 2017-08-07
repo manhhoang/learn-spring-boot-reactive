@@ -20,13 +20,14 @@ import java.util.Map;
 @Repository
 public class LenderRepository {
 
-    final HeaderColumnNameTranslateMappingStrategy<Lender> beanStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
+    private final HeaderColumnNameTranslateMappingStrategy<Lender>
+                            beanStrategy = new HeaderColumnNameTranslateMappingStrategy<>();
 
-    List<Lender> lenders = new ArrayList<>();
+    private List<Lender> lenders = new ArrayList<>();
 
     private static final Logger logger = LoggerFactory.getLogger(LenderRepository.class);
 
-    public List<Lender> findAllLendersSortedByRate(String marketFile) {
+    public List<Lender> findAllLendersSortedByRate(final String marketFile) {
         if (!lenders.isEmpty())
             return lenders;
 
@@ -38,7 +39,7 @@ public class LenderRepository {
         beanStrategy.setColumnMapping(columnMapping);
         final CsvToBean<Lender> csvToBean = new CsvToBean<>();
         try {
-            FileInputStream fileInputStream = new FileInputStream("./" + marketFile);
+            final FileInputStream fileInputStream = new FileInputStream("./" + marketFile);
             final CSVReader csvReader = new CSVReader(new InputStreamReader(fileInputStream));
             lenders = csvToBean.parse(beanStrategy, csvReader);
             fileInputStream.close();

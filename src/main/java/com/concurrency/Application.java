@@ -14,12 +14,12 @@ public class Application {
         if(args.length < 2) {
             System.out.println("Missing market file and loan amount arguments.");
         }
-        String marketFile = args[0];
-        double loanAmount = Double.parseDouble(args[1]);
+        final String marketFile = args[0];
+        final double loanAmount = Double.parseDouble(args[1]);
         printLoan(getAvailableLoan(marketFile, loanAmount));
     }
 
-    private static Loan getAvailableLoan(String marketFile, double loanAmount) {
+    private static Loan getAvailableLoan(final String marketFile, final double loanAmount) {
         Loan loan = new Loan();
         final LoanService loanService = getService();
         try {
@@ -41,7 +41,7 @@ public class Application {
         return loanService;
     }
 
-    private static void printLoan(Loan loan) {
+    private static void printLoan(final Loan loan) {
         if(!loan.isValid()) {
             System.out.println("Loan has to be of any £100 increment between £1000 and £15000 inclusive.");
             return;
@@ -49,10 +49,10 @@ public class Application {
         if (loan.getRequestedAmount() == 0) {
             System.out.println(ERROR_MESSAGE);
         } else {
-            System.out.println("Requested amount: " + String.format("%.0f", loan.getRequestedAmount()));
+            System.out.println("Requested amount: £" + String.format("%.0f", loan.getRequestedAmount()));
             System.out.println("Rate: " + String.format("%.01f", loan.getRate()) + "%");
-            System.out.println("Monthly repayment: " + String.format("%.02f", loan.getMonthlyRepayment()));
-            System.out.println("Total repayment: " + String.format("%.02f", loan.getTotalRepayment()));
+            System.out.println("Monthly repayment: £" + String.format("%.02f", loan.getMonthlyRepayment()));
+            System.out.println("Total repayment: £" + String.format("%.02f", loan.getTotalRepayment()));
         }
     }
 }
