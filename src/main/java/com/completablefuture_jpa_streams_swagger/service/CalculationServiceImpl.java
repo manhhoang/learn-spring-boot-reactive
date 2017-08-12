@@ -1,8 +1,8 @@
-package com.completablefuture_jpa_swagger.service;
+package com.completablefuture_jpa_streams_swagger.service;
 
-import com.completablefuture_jpa_swagger.exception.ApiException;
-import com.completablefuture_jpa_swagger.model.Task;
-import com.completablefuture_jpa_swagger.repository.CalculationRepository;
+import com.completablefuture_jpa_streams_swagger.exception.ApiException;
+import com.completablefuture_jpa_streams_swagger.model.Task;
+import com.completablefuture_jpa_streams_swagger.repository.CalculationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
-import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_CODE;
-import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_MESSAGE;
+import static com.completablefuture_jpa_streams_swagger.exception.ApiException.SAVE_ERROR_CODE;
+import static com.completablefuture_jpa_streams_swagger.exception.ApiException.SAVE_ERROR_MESSAGE;
 
 @Service
 public class CalculationServiceImpl implements CalculationService {

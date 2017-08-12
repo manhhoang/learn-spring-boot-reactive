@@ -1,4 +1,4 @@
-package com.completablefuture_jpa_swagger.config;
+package com.completablefuture_jpa_streams_swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
-package com.completablefuture_jpa_swagger.controller;
+package com.completablefuture_jpa_streams_swagger.controller;
 
-import com.completablefuture_jpa_swagger.model.Task;
+import com.completablefuture_jpa_streams_swagger.model.Task;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

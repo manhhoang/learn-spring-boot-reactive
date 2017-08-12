@@ -1,4 +1,4 @@
-package com.completablefuture_jpa_swagger.model;
+package com.completablefuture_jpa_streams_swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

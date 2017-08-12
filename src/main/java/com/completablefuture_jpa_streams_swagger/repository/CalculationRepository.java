@@ -1,6 +1,6 @@
-package com.completablefuture_jpa_swagger.repository;
+package com.completablefuture_jpa_streams_swagger.repository;
 
-import com.completablefuture_jpa_swagger.model.Task;
+import com.completablefuture_jpa_streams_swagger.model.Task;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
