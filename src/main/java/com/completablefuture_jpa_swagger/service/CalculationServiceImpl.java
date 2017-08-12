@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_CODE;
 import static com.completablefuture_jpa_swagger.exception.ApiException.SAVE_ERROR_MESSAGE;
@@ -23,6 +24,11 @@ public class CalculationServiceImpl implements CalculationService {
     @Autowired
     public CalculationServiceImpl(CalculationRepository calculationRepository) {
         this.calculationRepository = calculationRepository;
+    }
+
+    @Override
+    public Stream<Task> streamAll() {
+        return calculationRepository.streamAll();
     }
 
     @Override

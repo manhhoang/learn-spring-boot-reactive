@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,6 +36,24 @@ public class CalculationServiceImplTest {
     public void testMockCreation() {
         assertNotNull(calculationRepository);
         assertNotNull(calculationService);
+    }
+
+    @Test
+    public void testStreamAll() {
+        List<Task> tasks = new ArrayList<>();
+        Task task = new Task();
+        task.setTaskId("1");
+        task.setDuration(10000);
+        tasks.add(task);
+
+        task = new Task();
+        task.setTaskId("2");
+        task.setDuration(20000);
+        tasks.add(task);
+
+        when(calculationRepository.streamAll()).thenReturn(tasks.stream());
+        Stream<Task> taskStream = calculationRepository.streamAll();
+        assertEquals(2, taskStream.count());
     }
 
     @Test

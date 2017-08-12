@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Repository
 public interface CalculationRepository extends CrudRepository<Task, Long> {
+
+    @Query("select t from Task t")
+    Stream<Task> streamAll();
 
     Optional<List<Task>> findByTaskId(String taskId);
 

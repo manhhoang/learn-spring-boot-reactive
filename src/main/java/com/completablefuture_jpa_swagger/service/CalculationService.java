@@ -3,8 +3,11 @@ package com.completablefuture_jpa_swagger.service;
 import com.completablefuture_jpa_swagger.model.Task;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 public interface CalculationService {
+
+    Stream<Task> streamAll();
 
     /**
      * Save the task to database
