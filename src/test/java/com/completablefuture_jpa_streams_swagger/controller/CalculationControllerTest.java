@@ -46,7 +46,7 @@ public class CalculationControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         Task task = objectMapper.readValue(response.getBody(), Task.class);
         assertThat(task.getId(), equalTo(0));
-        assertThat(task.getTaskId(), equalTo(""));
+        assertThat(task.getTaskId(), equalTo("1"));
         assertThat(task.getDuration(), equalTo(0L));
     }
 }
