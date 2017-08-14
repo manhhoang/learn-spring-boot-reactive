@@ -1,12 +1,12 @@
-package com.concurrency;
+package com.stream_concurrency;
 
-import com.concurrency.config.AppConfig;
-import com.concurrency.model.Loan;
-import com.concurrency.service.LoanService;
+import com.stream_concurrency.config.AppConfig;
+import com.stream_concurrency.model.Loan;
+import com.stream_concurrency.service.LoanService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static com.concurrency.utils.Constants.ERROR_MESSAGE;
-import static com.concurrency.utils.Constants.LOAN_SERVICE;
+import static com.stream_concurrency.utils.Constants.ERROR_MESSAGE;
+import static com.stream_concurrency.utils.Constants.LOAN_SERVICE;
 
 public class Application {
 
@@ -14,8 +14,8 @@ public class Application {
         if(args.length < 2) {
             System.out.println("Missing market file and loan amount arguments.");
         }
-        final String marketFile = args[0];
-        final double loanAmount = Double.parseDouble(args[1]);
+        final String marketFile = "lender_data.csv"; //args[0];
+        final double loanAmount = 1000; //Double.parseDouble(args[1]);
         printLoan(getAvailableLoan(marketFile, loanAmount));
     }
 
@@ -42,6 +42,7 @@ public class Application {
     }
 
     private static void printLoan(final Loan loan) {
+        System.out.println();
         if(!loan.isValid()) {
             System.out.println("Loan has to be of any £100 increment between £1000 and £15000 inclusive.");
             return;

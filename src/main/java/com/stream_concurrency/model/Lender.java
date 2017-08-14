@@ -1,4 +1,4 @@
-package com.concurrency.model;
+package com.stream_concurrency.model;
 
 public class Lender {
 
@@ -7,6 +7,16 @@ public class Lender {
     private double rate;
 
     private double available;
+
+    public Lender(){
+
+    }
+
+    public Lender(String name, double rate, double available) {
+        this.name = name;
+        this.rate = rate;
+        this.available = available;
+    }
 
     public String getName() {
         return name;

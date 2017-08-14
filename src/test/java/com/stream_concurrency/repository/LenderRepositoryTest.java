@@ -1,7 +1,7 @@
-package com.concurrency.repository;
+package com.stream_concurrency.repository;
 
-import com.concurrency.exception.AppException;
-import com.concurrency.model.Lender;
+import com.stream_concurrency.exception.AppException;
+import com.stream_concurrency.model.Lender;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -9,7 +9,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 

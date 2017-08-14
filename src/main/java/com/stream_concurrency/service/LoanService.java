@@ -1,10 +1,10 @@
-package com.concurrency.service;
+package com.stream_concurrency.service;
 
-import com.concurrency.exception.AppException;
-import com.concurrency.model.Lender;
-import com.concurrency.model.Loan;
-import com.concurrency.repository.LenderRepository;
-import com.concurrency.utils.Utils;
+import com.stream_concurrency.exception.AppException;
+import com.stream_concurrency.model.Lender;
+import com.stream_concurrency.model.Loan;
+import com.stream_concurrency.repository.LenderRepository;
+import com.stream_concurrency.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import static com.concurrency.utils.Constants.ERROR_MESSAGE;
+import static com.stream_concurrency.utils.Constants.ERROR_MESSAGE;
 
 @Service
 public class LoanService {
@@ -26,7 +26,7 @@ public class LoanService {
     private static final Logger logger = LoggerFactory.getLogger(LoanService.class);
 
     public CompletableFuture<Loan> getAvailableLoan(final String marketFile, final double loanAmount) {
-        return CompletableFuture.supplyAsync(() -> lenderRepository.findAllLendersSortedByRate(marketFile))
+        return CompletableFuture.supplyAsync(() -> lenderRepository.streamAllLendersSortedByRate(marketFile))
                 .thenApply(lenders -> {
                     double total = 0;
                     final Map<Double, Double> lenderMap = getLenderMap(lenders, loanAmount);
