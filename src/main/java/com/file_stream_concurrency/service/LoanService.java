@@ -1,10 +1,10 @@
-package com.stream_concurrency.service;
+package com.file_stream_concurrency.service;
 
-import com.stream_concurrency.exception.AppException;
-import com.stream_concurrency.model.Lender;
-import com.stream_concurrency.model.Loan;
-import com.stream_concurrency.repository.LenderRepository;
-import com.stream_concurrency.utils.Utils;
+import com.file_stream_concurrency.exception.AppException;
+import com.file_stream_concurrency.model.Lender;
+import com.file_stream_concurrency.model.Loan;
+import com.file_stream_concurrency.repository.LenderRepository;
+import com.file_stream_concurrency.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import static com.stream_concurrency.utils.Constants.ERROR_MESSAGE;
+import static com.file_stream_concurrency.utils.Constants.ERROR_MESSAGE;
 
 @Service
 public class LoanService {

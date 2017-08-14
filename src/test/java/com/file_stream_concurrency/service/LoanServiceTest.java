@@ -1,8 +1,8 @@
-package com.stream_concurrency.service;
+package com.file_stream_concurrency.service;
 
-import com.stream_concurrency.model.Lender;
-import com.stream_concurrency.model.Loan;
-import com.stream_concurrency.repository.LenderRepository;
+import com.file_stream_concurrency.model.Lender;
+import com.file_stream_concurrency.model.Loan;
+import com.file_stream_concurrency.repository.LenderRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

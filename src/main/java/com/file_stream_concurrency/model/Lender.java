@@ -1,4 +1,4 @@
-package com.stream_concurrency.model;
+package com.file_stream_concurrency.model;
 
 public class Lender {
 

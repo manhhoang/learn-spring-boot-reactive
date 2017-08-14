@@ -1,4 +1,4 @@
-package com.stream_concurrency.exception;
+package com.file_stream_concurrency.exception;
 
 public class AppException extends RuntimeException {
 

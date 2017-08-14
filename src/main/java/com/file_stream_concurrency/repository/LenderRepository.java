@@ -1,7 +1,7 @@
-package com.stream_concurrency.repository;
+package com.file_stream_concurrency.repository;
 
-import com.stream_concurrency.exception.AppException;
-import com.stream_concurrency.model.Lender;
+import com.file_stream_concurrency.exception.AppException;
+import com.file_stream_concurrency.model.Lender;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
