@@ -14,7 +14,7 @@ public class Application {
         if(args.length < 2) {
             System.out.println("Missing market file and loan amount arguments.");
         }
-        final String marketFile = "lender_data.csv"; //args[0];
+        final String marketFile = "reactive/lender_data.csv"; //args[0];
         final double loanAmount = 1000; //Double.parseDouble(args[1]);
         printLoan(getAvailableLoan(marketFile, loanAmount));
     }
