@@ -1,4 +1,8 @@
 target
 reactjs/node_modules
+knapsack/node_modules
 *.iml
 .idea
+knapsack/src/main/resources/static/built
+reactjs/src/main/resources/static/built
+
