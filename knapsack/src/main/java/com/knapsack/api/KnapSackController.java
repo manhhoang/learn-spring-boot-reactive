@@ -6,12 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +15,6 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/api")
 public class KnapSackController {
 
-    @Autowired
     private final KnapSackService knapSackService;
 
     @Autowired
@@ -38,8 +32,8 @@ public class KnapSackController {
             @ApiResponse(code = 500, message = "Internal server error.", response = Item.class)})
     @RequestMapping(value = "/v1/knapsack/{capacity}", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public CompletableFuture<List<Item>> getOptimizer(@PathVariable("capacity") String capacity, @RequestBody List<Item> items) {
-        return null;
+    public CompletableFuture<List<Item>> getOptimizer(@PathVariable("capacity") double capacity, @RequestBody List<Item> items) {
+        return CompletableFuture.completedFuture(knapSackService.getOptimizer(capacity, items));
     }
 
 }

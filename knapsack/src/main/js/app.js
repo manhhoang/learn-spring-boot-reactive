@@ -7,9 +7,7 @@ const client = require('./client');
 
 const follow = require('./follow'); // function to hop multiple links by "rel"
 
-const stompClient = require('./websocket-listener');
-
-const root = '/api';
+const root = '/api/v1';
 
 class App extends React.Component {
 
@@ -34,7 +32,6 @@ class App extends React.Component {
 				path: employeeCollection.entity._links.profile.href,
 				headers: {'Accept': 'application/schema+json'}
 			}).then(schema => {
-				// tag::json-schema-filter[]
 				/**
 				 * Filter unneeded JSON Schema properties, like uri references and
 				 * subtypes ($ref).
@@ -52,7 +49,6 @@ class App extends React.Component {
 				this.schema = schema.entity;
 				this.links = employeeCollection.entity._links;
 				return employeeCollection;
-				// end::json-schema-filter[]
 			});
 		}).then(employeeCollection => {
 			this.page = employeeCollection.entity.page;
@@ -194,15 +190,6 @@ class App extends React.Component {
 				links: this.links
 			});
 		});
-	}
-
-	componentDidMount() {
-		this.loadFromServer(this.state.pageSize);
-		stompClient.register([
-			{route: '/topic/newEmployee', callback: this.refreshAndGoToLastPage},
-			{route: '/topic/updateEmployee', callback: this.refreshCurrentPage},
-			{route: '/topic/deleteEmployee', callback: this.refreshCurrentPage}
-		]);
 	}
 
 	render() {
