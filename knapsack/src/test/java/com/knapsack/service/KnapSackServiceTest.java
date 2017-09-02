@@ -32,6 +32,6 @@ public class KnapSackServiceTest {
         List<Item> items = new ArrayList<>();
         Item item = new Item();
         items.add(item);
-        List<Item> results = knapSackService.getOptimizer(capacity, items);
+        List<Item> results = knapSackService.optimizing(capacity, items);
     }
 }

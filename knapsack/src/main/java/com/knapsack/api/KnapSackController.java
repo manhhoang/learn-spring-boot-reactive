@@ -22,7 +22,7 @@ public class KnapSackController {
         this.knapSackService = knapSackService;
     }
 
-    @ApiOperation(value = "Get optimizer.", notes = "", response = Item.class, tags = {"Item",})
+    @ApiOperation(value = "Optimizing.", notes = "", response = Item.class, tags = {"Optimizing"})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 400, message = "Request failed.", response = Item.class),
@@ -32,8 +32,7 @@ public class KnapSackController {
             @ApiResponse(code = 500, message = "Internal server error.", response = Item.class)})
     @RequestMapping(value = "/v1/knapsack/{capacity}", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public CompletableFuture<List<Item>> getOptimizer(@PathVariable("capacity") double capacity, @RequestBody List<Item> items) {
-        return CompletableFuture.completedFuture(knapSackService.getOptimizer(capacity, items));
+    public CompletableFuture<List<Item>> optimizing(@PathVariable("capacity") String capacity, @RequestBody List<Item> items) {
+        return CompletableFuture.completedFuture(knapSackService.optimizing(Double.parseDouble(capacity), items));
     }
-
 }

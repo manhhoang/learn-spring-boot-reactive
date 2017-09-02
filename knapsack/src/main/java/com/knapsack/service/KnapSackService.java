@@ -9,10 +9,11 @@ import java.util.List;
 @Service
 public class KnapSackService {
 
-    public List<Item> getOptimizer(double capacity, List<Item> items) {
+    public List<Item> optimizing(double capacity, List<Item> items) {
         List<Item> retItems = new ArrayList<>();
-        Item item = new Item();
-        retItems.add(item);
+        for(Item it: items) {
+            retItems.add(it);
+        }
         return retItems;
     }
 }
