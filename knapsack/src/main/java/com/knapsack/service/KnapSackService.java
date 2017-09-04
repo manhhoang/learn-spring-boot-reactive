@@ -1,6 +1,8 @@
 package com.knapsack.service;
 
 import com.knapsack.model.Item;
+import com.knapsack.repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +10,13 @@ import java.util.List;
 
 @Service
 public class KnapSackService {
+
+    private final ItemRepository itemRepository;
+
+    @Autowired
+    public KnapSackService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     public List<Item> optimizing(int capacity, List<Item> items) {
         int N = items.size();
@@ -40,7 +49,7 @@ public class KnapSackService {
         for (int i = 1; i < N + 1; i++)
             if (selected[i] == 1) {
                 retItems.add(items.get(i));
-                System.out.println(items.get(i).getWeight() + "  " + items.get(i).getPrice());
+                this.itemRepository.save(new Item(items.get(i).getWeight(), items.get(i).getPrice()));
             }
 
         return retItems;

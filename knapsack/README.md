@@ -16,4 +16,14 @@ $ curl -v -u user:password -H "Content-Type: application/json" -X POST localhost
 
 $ curl -v -u user:password -H "Content-Type: application/json" -X POST localhost:8080/api/v1/knapsack/6 -d '[{"weight":5, "price":3}, {"weight":4, "price":6}, {"weight":2, "price":4}]'
 
-http://localhost:8080
+
+## UI
+http://localhost:8080/login
+
+## Swagger UI
+http://localhost:8080/swagger-ui.html
+
+http://localhost:8080/v2/api-docs
+
+##
+http://localhost:8080/api/v1

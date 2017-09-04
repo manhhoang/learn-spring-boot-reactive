@@ -1,6 +1,18 @@
 package com.knapsack.model;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Data
+@Entity
 public class Item {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     private int weight;
 
@@ -8,6 +20,21 @@ public class Item {
 
     public int getWeight() {
         return weight;
+    }
+
+    public Item() {}
+
+    public Item(int weight, int price) {
+        this.weight = weight;
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setWeight(int weight) {

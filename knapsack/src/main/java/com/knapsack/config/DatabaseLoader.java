@@ -1,6 +1,8 @@
 package com.knapsack.config;
 
+import com.knapsack.model.Item;
 import com.knapsack.model.KnapSackUser;
+import com.knapsack.repository.ItemRepository;
 import com.knapsack.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
