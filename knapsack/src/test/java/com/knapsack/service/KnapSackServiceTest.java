@@ -28,7 +28,7 @@ public class KnapSackServiceTest {
 
     @Test
     public void testGetOptimizer() {
-        double capacity = 5;
+        int capacity = 5;
         List<Item> items = new ArrayList<>();
         Item item = new Item();
         items.add(item);

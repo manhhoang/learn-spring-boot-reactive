@@ -33,6 +33,6 @@ public class KnapSackController {
     @RequestMapping(value = "/v1/knapsack/{capacity}", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public CompletableFuture<List<Item>> optimizing(@PathVariable("capacity") String capacity, @RequestBody List<Item> items) {
-        return CompletableFuture.completedFuture(knapSackService.optimizing(Double.parseDouble(capacity), items));
+        return CompletableFuture.completedFuture(knapSackService.optimizing(Integer.parseInt(capacity), items));
     }
 }

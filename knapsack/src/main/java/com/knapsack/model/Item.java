@@ -2,23 +2,23 @@ package com.knapsack.model;
 
 public class Item {
 
-    private double weight;
+    private int weight;
 
-    private double price;
+    private int price;
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }
