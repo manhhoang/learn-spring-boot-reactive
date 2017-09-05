@@ -31,4 +31,10 @@ http://localhost:8080/api/v1
 ## Run Docker
 docker pull manhhoang/learn-spring-boot-reactive
 
-docker run manhhoang/learn-spring-boot-reactive
+docker run -d -p 8080:8080 manhhoang/learn-spring-boot-reactive
+
+docker ps -a
+
+docker stop 5ab89c4e9a64
+
+docker start 5ab89c4e9a64
