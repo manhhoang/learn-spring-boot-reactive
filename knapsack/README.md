@@ -27,3 +27,8 @@ http://localhost:8080/v2/api-docs
 
 ##
 http://localhost:8080/api/v1
+
+## Run Docker
+docker pull manhhoang/learn-spring-boot-reactive
+
+docker run manhhoang/learn-spring-boot-reactive
