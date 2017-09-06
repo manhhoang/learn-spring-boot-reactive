@@ -46,12 +46,12 @@ public class KnapSackService {
         }
 
         List<Item> retItems = new ArrayList<>();
-        for (int i = 1; i < N + 1; i++)
+        for (int i = 1; i < N + 1; i++) {
             if (selected[i] == 1) {
                 retItems.add(items.get(i));
-                this.itemRepository.save(new Item(items.get(i).getWeight(), items.get(i).getPrice()));
             }
-
+        }
+        this.itemRepository.save(retItems);
         return retItems;
     }
 }

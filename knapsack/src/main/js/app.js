@@ -55,7 +55,6 @@ class ItemList extends React.Component{
 			<table>
 				<tbody>
 					<tr>
-					    <th>Id</th>
 						<th>Weight</th>
 						<th>Price</th>
 					</tr>
@@ -70,7 +69,6 @@ class Item extends React.Component{
 	render() {
 		return (
 			<tr>
-			    <td>{this.props.item.id}</td>
 				<td>{this.props.item.weight}</td>
 				<td>{this.props.item.price}</td>
 			</tr>

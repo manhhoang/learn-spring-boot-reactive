@@ -1,16 +1,18 @@
 #
 
-## Setup
-    1. JAVA_HOME
+
+## Setup MacOS
+    1. set JAVA_HOME
     2. Download Maven: http://apache.xl-mirror.nl/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.zip  
     3. Unzip apache-maven-3.5.0-bin.zip
-    3. M2_HOME: set M2_HOME=E:\Working\Tools\apache-maven-3.5.0
+    3. set M2_HOME=E:\Working\Tools\apache-maven-3.5.0
 
-## Run
+
+## Run application on MacOS
 
 $ mvn clean install
 
-sh mvnw.sh spring-boot:run
+$ sh mvnw.sh spring-boot:run
 
 $ curl -v -u user:password -H "Content-Type: application/json" -X POST localhost:8080/api/v1/knapsack/5 -d '[{"weight":4, "price":6}, {"weight":2, "price":4}]'
 
@@ -20,21 +22,30 @@ $ curl -v -u user:password -H "Content-Type: application/json" -X POST localhost
 ## UI
 http://localhost:8080/login
 
+
 ## Swagger UI
 http://localhost:8080/swagger-ui.html
 
 http://localhost:8080/v2/api-docs
 
-##
-http://localhost:8080/api/v1
 
 ## Run Docker
-docker pull manhhoang/learn-spring-boot-reactive
+$ docker pull manhhoang/learn-spring-boot-reactive
 
-docker run -d -p 8080:8080 manhhoang/learn-spring-boot-reactive
+$ docker run -d -p 8080:8080 manhhoang/learn-spring-boot-reactive
 
-docker ps -a
+$ docker ps -a
+$ docker stop [container]
+$ docker start [container]
 
-docker stop 5ab89c4e9a64
 
-docker start 5ab89c4e9a64
+## Technologies
+
+    1. Java 8
+    2. Spring Boot
+    3. Spring Data Rest
+    4. Spring JPA
+    5. Spring Security
+    6. H2 Database
+    7. ReactJS 
+    8. Maven
