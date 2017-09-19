@@ -14,7 +14,7 @@
 	<modules>
 		<module>reactive</module>
 		<module>reactjs</module>
-		<module>knapsack</module>
+		<module>lombok</module>
 		<module>gateway-service</module>
 		<module>discovery-service</module>
 		<module>zipkin-service</module>
