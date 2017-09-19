@@ -5,6 +5,10 @@ import com.file_stream_concurrency.model.Lender;
 import com.file_stream_concurrency.model.Loan;
 import com.file_stream_concurrency.repository.LenderRepository;
 import com.file_stream_concurrency.utils.Utils;
+import com.file_stream_concurrency.value_object.AvailableAmount;
+import com.file_stream_concurrency.value_object.ImmutableAvailableAmount;
+import com.file_stream_concurrency.value_object.ImmutableRate;
+import com.file_stream_concurrency.value_object.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +33,9 @@ public class LoanService {
         return CompletableFuture.supplyAsync(() -> lenderRepository.streamAllLendersSortedByRate(marketFile))
                 .thenApply(lenders -> {
                     double total = 0;
-                    final Map<Double, Double> lenderMap = getLenderMap(lenders, loanAmount);
+                    final Map<Rate, AvailableAmount> lenderMap = getLenderMap(lenders, loanAmount);
                     for (Map.Entry entry : lenderMap.entrySet()) {
-                        total += (double) entry.getKey() * (double) entry.getValue();
+                        total += ((Rate) entry.getKey()).value() * ((AvailableAmount) entry.getValue()).value();
                     }
                     Loan loan = new Loan();
                     loan.setRate(Utils.roundOne(total / loanAmount * 100));
@@ -53,18 +57,20 @@ public class LoanService {
      * @param loanAmount The loan amount
      * @return map of list lender rate and amount
      */
-    private Map<Double, Double> getLenderMap(final List<Lender> lenders, final double loanAmount) {
-        Map<Double, Double> lenderMap = new HashMap<>();
+    private Map<Rate, AvailableAmount> getLenderMap(final List<Lender> lenders, final double loanAmount) {
+        Map<Rate, AvailableAmount> lenderMap = new HashMap<>();
         double total = 0;
         for (Lender lender : lenders) {
             total += lender.getAvailable();
-            double availableAmount = lenderMap.getOrDefault(lender.getRate(), 0d);
+            AvailableAmount availableAmount = lenderMap.getOrDefault(lender.getRate(), ImmutableAvailableAmount.builder().value(0d).build());
             if (total <= loanAmount) {
-                lenderMap.put(lender.getRate(), availableAmount + lender.getAvailable());
+                lenderMap.put(ImmutableRate.builder().value(lender.getRate()).build(),
+                        ImmutableAvailableAmount.builder().value(availableAmount.value() + lender.getAvailable()).build());
                 if (total == loanAmount)
                     break;
             } else {
-                lenderMap.put(lender.getRate(), availableAmount + lender.getAvailable() - (total - loanAmount));
+                lenderMap.put(ImmutableRate.builder().value(lender.getRate()).build(),
+                        ImmutableAvailableAmount.builder().value(availableAmount.value() + lender.getAvailable() - (total - loanAmount)).build());
                 break;
             }
         }
