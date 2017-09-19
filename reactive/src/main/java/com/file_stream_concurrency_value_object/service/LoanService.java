@@ -1,14 +1,14 @@
-package com.file_stream_concurrency.service;
+package com.file_stream_concurrency_value_object.service;
 
-import com.file_stream_concurrency.exception.AppException;
-import com.file_stream_concurrency.model.Lender;
-import com.file_stream_concurrency.model.Loan;
-import com.file_stream_concurrency.repository.LenderRepository;
-import com.file_stream_concurrency.utils.Utils;
-import com.file_stream_concurrency.value_object.AvailableAmount;
-import com.file_stream_concurrency.value_object.ImmutableAvailableAmount;
-import com.file_stream_concurrency.value_object.ImmutableRate;
-import com.file_stream_concurrency.value_object.Rate;
+import com.file_stream_concurrency_value_object.exception.AppException;
+import com.file_stream_concurrency_value_object.model.Lender;
+import com.file_stream_concurrency_value_object.model.Loan;
+import com.file_stream_concurrency_value_object.repository.LenderRepository;
+import com.file_stream_concurrency_value_object.utils.Utils;
+import com.file_stream_concurrency_value_object.value_object.AvailableAmount;
+import com.file_stream_concurrency_value_object.value_object.ImmutableAvailableAmount;
+import com.file_stream_concurrency_value_object.value_object.ImmutableRate;
+import com.file_stream_concurrency_value_object.value_object.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import static com.file_stream_concurrency.utils.Constants.ERROR_MESSAGE;
+import static com.file_stream_concurrency_value_object.utils.Constants.ERROR_MESSAGE;
 
 @Service
 public class LoanService {

@@ -1,12 +1,12 @@
-package com.file_stream_concurrency;
+package com.file_stream_concurrency_value_object;
 
-import com.file_stream_concurrency.config.AppConfig;
-import com.file_stream_concurrency.model.Loan;
-import com.file_stream_concurrency.service.LoanService;
+import com.file_stream_concurrency_value_object.config.AppConfig;
+import com.file_stream_concurrency_value_object.model.Loan;
+import com.file_stream_concurrency_value_object.service.LoanService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static com.file_stream_concurrency.utils.Constants.ERROR_MESSAGE;
-import static com.file_stream_concurrency.utils.Constants.LOAN_SERVICE;
+import static com.file_stream_concurrency_value_object.utils.Constants.ERROR_MESSAGE;
+import static com.file_stream_concurrency_value_object.utils.Constants.LOAN_SERVICE;
 
 public class Application {
 

@@ -1,4 +1,4 @@
-package com.file_stream_concurrency.utils;
+package com.file_stream_concurrency_value_object.utils;
 
 public class Utils {
 

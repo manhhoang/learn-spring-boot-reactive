@@ -1,7 +1,7 @@
-package com.file_stream_concurrency.repository;
+package com.file_stream_concurrency_value_object.repository;
 
-import com.file_stream_concurrency.exception.AppException;
-import com.file_stream_concurrency.model.Lender;
+import com.file_stream_concurrency_value_object.exception.AppException;
+import com.file_stream_concurrency_value_object.model.Lender;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

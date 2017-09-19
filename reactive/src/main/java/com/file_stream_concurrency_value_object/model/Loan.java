@@ -1,4 +1,4 @@
-package com.file_stream_concurrency.model;
+package com.file_stream_concurrency_value_object.model;
 
 public class Loan {
 
