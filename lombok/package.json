@@ -1,7 +1,7 @@
 {
-  "name": "knapsack",
+  "name": "lombok",
   "version": "0.1.0",
-  "description": "Knapsack",
+  "description": "Lombok",
   "author": "Manh Hoang",
   "dependencies": {
     "react": "^15.3.2",

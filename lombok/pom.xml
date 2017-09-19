@@ -12,12 +12,12 @@
 	</parent>
 
 	<groupId>com.jd</groupId>
-	<artifactId>knapsack</artifactId>
+	<artifactId>lombok</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>knapsack</name>
-	<description>Knacksack</description>
+	<name>lombok</name>
+	<description>Lombok</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,6 +63,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
